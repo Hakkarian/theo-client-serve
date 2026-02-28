@@ -1,0 +1,13 @@
+{
+  "name": "lab_3-4_badarla",
+  "private": true,
+  "devDependencies": {
+    "sass": "^1.92.0",
+    "serve": "^14.2.4"
+  },
+  "scripts": {
+    "build": "sass scss/styles.scss css/styles.css --no-source-map",
+    "watch": "sass --watch scss/styles.scss:css/styles.css --no-source-map",
+    "serve": "serve -l 3000"
+  }
+}
