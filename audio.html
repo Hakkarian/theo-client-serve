@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Badarla — Audio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+
+  <body>
+    <audio id="bgm" class="sr-only" loop preload="auto">
+      <source type="audio/mpeg" />
+    </audio>
+
+    <div class="bg" aria-hidden="true">
+      <div class="bg__grid"></div>
+      <div class="bg__glow"></div>
+      <div class="bg__scanlines"></div>
+      <div class="bg__vignette"></div>
+    </div>
+
+    <main class="wrap">
+      <nav class="nav" aria-label="Site">
+        <a class="nav__link" href="./index.html">Profile</a>
+        <a class="nav__link nav__link--active" href="./audio.html">Audio</a>
+      </nav>
+
+      <section class="card" aria-label="Audio list">
+        <header class="card__header">
+          <h1 class="title title--sm">
+            <span class="title__glitch" data-text="AUDIO">AUDIO</span>
+          </h1>
+          <p class="subtitle">Playlist (1 track)</p>
+        </header>
+
+        <div class="card__body">
+          <ul class="list" aria-label="Tracks">
+            <li class="track">
+              <div class="track__meta">
+                <div class="track__name">Fur Vijay</div>
+                <div class="track__hint">by Teo</div>
+              </div>
+              <div class="player" role="group" aria-label="Track player">
+                <audio id="trackAudio" class="player__audio" preload="metadata">
+                  <source type="audio/mpeg" />
+                </audio>
+                <div class="player__controls">
+                  <button class="player__btn player__btn--play" type="button" aria-label="Play">
+                    <span class="player__icon player__icon--play" aria-hidden="true"></span>
+                    <span class="player__icon player__icon--pause" aria-hidden="true"></span>
+                  </button>
+                  <div class="player__progress">
+                    <div class="player__rail">
+                      <div class="player__fill"></div>
+                    </div>
+                    <input type="range" class="player__seek" min="0" max="100" value="0" step="0.1" aria-label="Seek" />
+                  </div>
+                  <span class="player__time">0:00 / 0:00</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <footer class="card__footer">
+          <span class="chip">ASSETS/AUDIO</span>
+          <span class="sep" aria-hidden="true">/</span>
+          <span class="chip chip--alt">SASS</span>
+        </footer>
+      </section>
+
+      <p class="hint">
+        <span class="mono">← →</span> switch pages · <span class="mono">Space</span> music on/off
+      </p>
+    </main>
+
+    <script>
+      (() => {
+        const audio = document.getElementById("bgm");
+        if (!audio) return;
+
+        const params = new URLSearchParams(window.location.search);
+        const trackFile = params.get("track") || "Fur_Vijay.mp3";
+        const trackTitle = params.get("title") || "Fur Vijay";
+        const trackArtist = params.get("artist") || "Teo";
+
+        const bgmSource = audio.querySelector("source");
+        if (bgmSource) {
+          bgmSource.src = `./assets/${trackFile}`;
+          audio.load();
+        }
+
+        const trackAudio = document.getElementById("trackAudio");
+        const trackSource = trackAudio?.querySelector("source");
+        if (trackAudio && trackSource) {
+          trackSource.src = `./assets/${trackFile}`;
+          trackAudio.load();
+        }
+
+        const nameEl = document.querySelector(".track__name");
+        const hintEl = document.querySelector(".track__hint");
+        if (nameEl) nameEl.textContent = trackTitle;
+        if (hintEl) hintEl.textContent = `by ${trackArtist}`;
+
+        const toggleBgm = async () => {
+          if (audio.paused) {
+            try {
+              await audio.play();
+            } catch {}
+          } else {
+            audio.pause();
+          }
+        };
+
+        const EXIT_DURATION = 320;
+        const navigateTo = (url) => {
+          const wrap = document.querySelector(".wrap");
+          if (wrap) wrap.classList.add("page-exit");
+          setTimeout(() => { location.href = url; }, EXIT_DURATION);
+        };
+
+        document.querySelectorAll(".nav__link").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const href = link.getAttribute("href") || "";
+            if (href && !href.startsWith("#") && new URL(link.href, location.href).pathname !== location.pathname) {
+              e.preventDefault();
+              let url = link.href;
+              if (!url.includes("?")) url += (window.location.search || "");
+              navigateTo(url);
+            }
+          });
+        });
+
+        document.addEventListener("keydown", (e) => {
+          const target = e.target;
+          if (target?.closest?.(".player") || target?.closest?.("input") || target?.closest?.("textarea")) return;
+          if (e.code === "Space" && !e.defaultPrevented) {
+            e.preventDefault();
+            toggleBgm();
+          } else if (e.code === "ArrowLeft") {
+            e.preventDefault();
+            navigateTo("./index.html" + window.location.search);
+          }
+        });
+
+        if (trackAudio) {
+          const playBtn = document.querySelector(".player__btn--play");
+          const seekInput = document.querySelector(".player__seek");
+          const fillEl = document.querySelector(".player__fill");
+          const timeEl = document.querySelector(".player__time");
+
+          const formatTime = (s) => {
+            if (s == null || !isFinite(s) || s < 0) return "--:--";
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return `${m}:${sec.toString().padStart(2, "0")}`;
+          };
+
+          const syncUI = () => {
+            const pct = trackAudio.duration ? (trackAudio.currentTime / trackAudio.duration) * 100 : 0;
+            seekInput.value = pct;
+            fillEl.style.width = pct + "%";
+            timeEl.textContent = formatTime(trackAudio.currentTime) + " / " + formatTime(trackAudio.duration);
+          };
+
+          let tooltipTimeout;
+          const showTooltip = (msg) => {
+            clearTimeout(tooltipTimeout);
+            let tip = playBtn.querySelector(".player__tooltip");
+            if (!tip) {
+              tip = document.createElement("span");
+              tip.className = "player__tooltip";
+              playBtn.appendChild(tip);
+            }
+            tip.textContent = msg;
+            tip.classList.add("show");
+            tooltipTimeout = setTimeout(() => tip.classList.remove("show"), 2200);
+          };
+
+          playBtn.addEventListener("click", () => {
+            if (trackAudio.paused) {
+              if (!audio.paused) {
+                showTooltip("Tsshh! Stop the global audio!");
+                return;
+              }
+              trackAudio.play();
+            } else {
+              trackAudio.pause();
+            }
+          });
+
+          trackAudio.addEventListener("play", () => playBtn.classList.add("is-playing"));
+          trackAudio.addEventListener("pause", () => playBtn.classList.remove("is-playing"));
+          trackAudio.addEventListener("timeupdate", syncUI);
+          trackAudio.addEventListener("loadedmetadata", syncUI);
+          trackAudio.addEventListener("ended", syncUI);
+
+          const seekTo = (pct) => {
+            const dur = trackAudio.duration;
+            if (dur > 0 && isFinite(dur)) trackAudio.currentTime = (pct / 100) * dur;
+            seekInput.value = pct;
+            fillEl.style.width = pct + "%";
+          };
+
+          seekInput.addEventListener("input", (e) => seekTo(parseFloat(e.target.value)));
+
+          document.querySelector(".player__rail")?.addEventListener("click", (e) => {
+            const rail = e.currentTarget;
+            seekTo((e.offsetX / rail.offsetWidth) * 100);
+          });
+
+          syncUI();
+        }
+
+        const card = document.querySelector(".card");
+        if (card) {
+          const tiltStrength = 8;
+          const handleMove = (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            card.style.setProperty("--mouse-x", String(x * 100));
+            card.style.setProperty("--mouse-y", String(y * 100));
+            card.style.setProperty("--tilt-x", String((y - 0.5) * -tiltStrength + "deg"));
+            card.style.setProperty("--tilt-y", String((x - 0.5) * tiltStrength + "deg"));
+          };
+          const handleLeave = () => {
+            card.style.setProperty("--tilt-x", "0deg");
+            card.style.setProperty("--tilt-y", "0deg");
+          };
+          card.addEventListener("pointermove", handleMove);
+          card.addEventListener("pointerleave", handleLeave);
+        }
+      })();
+    </script>
+  </body>
+</html>
+
