@@ -1,0 +1,1090 @@
+$font-title: "Orbitron", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+$font-mono: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+$bg: #070712;
+$fg: #eaf2ff;
+$muted: rgba(234, 242, 255, 0.72);
+$line: rgba(234, 242, 255, 0.12);
+
+$cyan: #00f5ff;
+$magenta: #ff2bd6;
+$lime: #b7ff2a;
+$amber: #ffbf36;
+
+@mixin center($dir: column) {
+  display: flex;
+  flex-direction: $dir;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin glow($c, $a: 0.7) {
+  text-shadow:
+    0 0 10px rgba($c, $a),
+    0 0 30px rgba($c, $a * 0.55),
+    0 0 60px rgba($c, $a * 0.35);
+}
+
+@mixin focusRing($c) {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba($c, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: $fg;
+  background: $bg;
+  font-family: $font-mono;
+  overflow-x: hidden;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  &__grid {
+    position: absolute;
+    inset: -40%;
+    background:
+      radial-gradient(1200px 800px at 15% 15%, rgba($cyan, 0.12), transparent 60%),
+      radial-gradient(900px 700px at 85% 25%, rgba($magenta, 0.10), transparent 60%),
+      radial-gradient(1000px 900px at 50% 90%, rgba($lime, 0.08), transparent 60%),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent 30%, transparent 70%, rgba(255, 255, 255, 0.04));
+    filter: saturate(125%) contrast(110%);
+    transform: rotate(-9deg);
+  }
+
+  &__glow {
+    position: absolute;
+    inset: -30%;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba($cyan, 0.0) 0px,
+        rgba($cyan, 0.0) 6px,
+        rgba($cyan, 0.06) 7px
+      ),
+      radial-gradient(closest-side at 60% 40%, rgba($magenta, 0.14), transparent 70%);
+    mix-blend-mode: screen;
+    animation: drift 10s ease-in-out infinite alternate;
+  }
+
+  &__scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.0),
+      rgba(0, 0, 0, 0.0) 2px,
+      rgba(0, 0, 0, 0.18) 3px
+    );
+    opacity: 0.55;
+  }
+
+  &__vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(closest-side, transparent 55%, rgba(0, 0, 0, 0.65));
+  }
+}
+
+.wrap {
+  min-height: 100%;
+  padding: clamp(20px, 5vw, 64px);
+  position: relative;
+  z-index: 1;
+  @include center(column);
+  gap: 18px;
+  perspective: 1200px;
+  animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  &.page-exit {
+    animation: pageExit 0.35s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  }
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+.nav {
+  width: min(720px, 100%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba($line, 0.9);
+    background: rgba(0, 0, 0, 0.18);
+    text-decoration: none;
+    color: rgba($fg, 0.88);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 12px;
+    transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      border-color: rgba($cyan, 0.45);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    &:focus-visible {
+      @include focusRing($cyan);
+    }
+
+    &--active {
+      border-color: rgba($magenta, 0.45);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.07) inset,
+        0 12px 40px rgba($magenta, 0.12);
+
+      &:hover {
+        border-color: rgba($magenta, 0.65);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+          0 14px 50px rgba($magenta, 0.2),
+          0 0 30px rgba($magenta, 0.15);
+      }
+
+      &:focus-visible {
+        @include focusRing($magenta);
+      }
+    }
+  }
+}
+
+.card {
+  --mouse-x: 50;
+  --mouse-y: 50;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  width: min(720px, 100%);
+  border: 1px solid rgba($cyan, 0.18);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)),
+    radial-gradient(900px 500px at 20% 20%, rgba($cyan, 0.12), transparent 65%),
+    radial-gradient(900px 500px at 90% 40%, rgba($magenta, 0.10), transparent 60%),
+    rgba(10, 10, 22, 0.55);
+  box-shadow:
+    0 18px 70px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-y)) rotateY(var(--tilt-x));
+  transition: transform 0.15s ease-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, transparent 30%, rgba($cyan, 0.10), transparent 60%),
+      linear-gradient(300deg, transparent 40%, rgba($magenta, 0.08), transparent 65%);
+    opacity: 0.7;
+    transform: translate3d(0, 0, 0);
+    animation: sheen 5.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      600px circle at calc(var(--mouse-x) * 1%) calc(var(--mouse-y) * 1%),
+      rgba(255, 255, 255, 0.08),
+      transparent 45%
+    );
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+
+  &__header,
+  &__body,
+  &__footer {
+    position: relative;
+    padding: 22px clamp(18px, 3.2vw, 30px);
+  }
+
+  &__header {
+    padding-top: 26px;
+    border-bottom: 1px solid rgba($line, 0.8);
+  }
+
+  &__body {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  &__footer {
+    border-top: 1px solid rgba($line, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $muted;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid rgba($lime, 0.22);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.18);
+  color: rgba($fg, 0.88);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: rgba($lime, 0.5);
+    box-shadow: 0 0 20px rgba($lime, 0.15);
+    transform: scale(1.02);
+  }
+
+  &:focus-within {
+    @include focusRing($lime);
+  }
+
+  &__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: $lime;
+    box-shadow: 0 0 12px rgba($lime, 0.75);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  &__text {
+    font-family: $font-mono;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+  }
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-top: 14px;
+
+  @media (max-width: 460px) {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  &__text {
+    min-width: 0;
+  }
+}
+
+.avatar {
+  width: 92px;
+  height: 92px;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 14px 50px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: scale(1.04);
+    box-shadow:
+      0 18px 60px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba($cyan, 0.4),
+      0 0 30px rgba($cyan, 0.2);
+  }
+
+  &:focus-within {
+    outline: none;
+    box-shadow:
+      0 18px 60px rgba(0, 0, 0, 0.55),
+      0 0 0 2px rgba($cyan, 0.5),
+      0 0 30px rgba($cyan, 0.25);
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(120%) contrast(110%) brightness(0.98);
+    transform: scale(1.04);
+  }
+
+  &__ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    border: 1px solid rgba($cyan, 0.35);
+    box-shadow:
+      0 0 0 1px rgba($magenta, 0.18) inset,
+      0 0 22px rgba($cyan, 0.14);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: linear-gradient(120deg, transparent 35%, rgba($cyan, 0.18), transparent 64%);
+    transform: rotate(-20deg) translateX(-18%);
+    opacity: 0.65;
+    animation: avatarSheen 6.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+.title {
+  margin: 14px 0 8px;
+  font-family: $font-title;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 800;
+  line-height: 1.05;
+  font-size: clamp(34px, 6vw, 56px);
+
+  &__glitch {
+    position: relative;
+    display: inline-block;
+    @include glow($cyan, 0.55);
+
+    &::before,
+    &::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      opacity: 0.85;
+      mix-blend-mode: screen;
+      clip-path: inset(0 0 0 0);
+    }
+
+    &::before {
+      color: $magenta;
+      transform: translate(2px, 0);
+      animation: glitchA 2.6s infinite linear alternate-reverse;
+    }
+
+    &::after {
+      color: $cyan;
+      transform: translate(-2px, 0);
+      animation: glitchB 2.2s infinite linear alternate-reverse;
+    }
+  }
+
+  &--sm {
+    font-size: clamp(28px, 4.2vw, 44px);
+  }
+}
+
+.subtitle {
+  margin: 0;
+  color: $muted;
+  letter-spacing: 0.08em;
+  font-size: clamp(13px, 2.2vw, 16px);
+}
+
+.meta {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+
+  @media (min-width: 560px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 14px;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 12px;
+    border: 1px solid rgba($line, 0.85);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.16);
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: rgba($cyan, 0.35);
+      background: rgba(0, 0, 0, 0.22);
+      box-shadow: 0 0 0 1px rgba($cyan, 0.12);
+    }
+
+    &:focus-within {
+      border-color: rgba($cyan, 0.45);
+      box-shadow: 0 0 0 2px rgba($cyan, 0.2);
+    }
+
+    dt {
+      color: rgba($fg, 0.78);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    dd {
+      margin: 0;
+      font-family: $font-title;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      color: rgba($fg, 0.92);
+    }
+  }
+}
+
+.cta {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-start;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba($cyan, 0.26);
+  color: rgba($fg, 0.92);
+  text-decoration: none;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: $font-mono;
+  background: rgba(0, 0, 0, 0.18);
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    border-color: rgba($cyan, 0.5);
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    @include focusRing($cyan);
+  }
+
+  &--primary {
+    border-color: rgba($magenta, 0.35);
+    background:
+      linear-gradient(90deg, rgba($magenta, 0.22), rgba($cyan, 0.18)),
+      rgba(0, 0, 0, 0.16);
+    @include glow($magenta, 0.35);
+
+    &:hover {
+      border-color: rgba($magenta, 0.6);
+      box-shadow:
+        0 14px 40px rgba($magenta, 0.14),
+        0 14px 40px rgba($cyan, 0.10),
+        0 0 0 1px rgba(255, 255, 255, 0.09) inset;
+    }
+  }
+
+  &--ghost {
+    border-style: dashed;
+    border-color: rgba($amber, 0.36);
+
+    &:hover {
+      border-color: rgba($amber, 0.65);
+      box-shadow:
+        0 14px 42px rgba($amber, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.07) inset;
+    }
+
+    &:focus-visible {
+      @include focusRing($amber);
+    }
+  }
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.track {
+  border: 1px solid rgba($line, 0.9);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.14);
+  display: grid;
+  gap: 12px;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: rgba($cyan, 0.35);
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 1px rgba($cyan, 0.15), 0 12px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  &:focus-within {
+    border-color: rgba($cyan, 0.45);
+    box-shadow: 0 0 0 2px rgba($cyan, 0.2);
+  }
+
+  @media (min-width: 560px) {
+    grid-template-columns: 1fr 1.2fr;
+    align-items: center;
+  }
+
+  &__meta {
+    min-width: 0;
+  }
+
+  &__name {
+    font-family: $font-title;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba($fg, 0.92);
+  }
+
+  &__hint {
+    margin-top: 6px;
+    color: rgba($fg, 0.68);
+    letter-spacing: 0.06em;
+    font-size: 12px;
+  }
+}
+
+.player {
+  width: 100%;
+  min-width: 0;
+
+  &__audio {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &__btn {
+    position: relative;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba($cyan, 0.35);
+    background: rgba(0, 0, 0, 0.28);
+    color: $fg;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      border-color: rgba($cyan, 0.6);
+      box-shadow: 0 0 20px rgba($cyan, 0.25);
+      transform: scale(1.04);
+    }
+
+    &:focus-visible {
+      @include focusRing($cyan);
+    }
+  }
+
+  &__icon {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    color: inherit;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.22s cubic-bezier(0.34, 1.2, 0.64, 1), transform 0.22s cubic-bezier(0.34, 1.2, 0.64, 1);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: currentColor;
+      border-radius: 2px;
+      transition: transform 0.2s ease;
+    }
+
+    &--play {
+      animation: iconPlayIdle 2s ease-in-out infinite;
+
+      &::before {
+        clip-path: polygon(25% 15%, 78% 50%, 25% 85%);
+      }
+
+      &::after {
+        opacity: 0;
+      }
+    }
+
+    &--pause {
+      &::before,
+      &::after {
+        width: 4px;
+        inset: 1px auto 1px 2px;
+      }
+
+      &::after {
+        inset: 1px 2px 1px auto;
+      }
+    }
+  }
+
+  &__btn:hover .player__icon {
+    transform: scale(1.1);
+  }
+
+  &__btn:hover .player__icon--play {
+    animation: none;
+  }
+
+  &__btn .player__icon--pause {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  &__btn.is-playing .player__icon--play {
+    opacity: 0;
+    transform: scale(0.85);
+    animation: none;
+  }
+
+  &__btn.is-playing .player__icon--pause {
+    opacity: 1;
+    animation: iconPauseIn 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+  }
+
+  &__tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: linear-gradient(135deg, rgba($magenta, 0.95), rgba($cyan, 0.85));
+    color: $fg;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-family: $font-mono;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba($magenta, 0.95);
+    }
+
+    &.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  &__progress {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+  }
+
+  &__rail {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba($line, 0.8);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  &__fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0%;
+    background: linear-gradient(90deg, rgba($cyan, 0.7), rgba($magenta, 0.6));
+    border-radius: 999px 0 0 999px;
+    transition: width 0.08s linear;
+  }
+
+  &__seek {
+    position: absolute;
+    inset: -6px 0;
+    width: 100%;
+    height: calc(100% + 12px);
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  &__time {
+    flex-shrink: 0;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: $muted;
+    min-width: 5ch;
+  }
+}
+
+.pad {
+  margin-top: 18px;
+  border-radius: 16px;
+  border: 1px dashed rgba($cyan, 0.32);
+  background: rgba(0, 0, 0, 0.24);
+  padding: 12px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    border-color: rgba($cyan, 0.55);
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0 1px rgba($cyan, 0.15), inset 0 0 30px rgba($cyan, 0.04);
+  }
+
+  &:focus-within {
+    border-color: rgba($magenta, 0.45);
+    box-shadow: 0 0 0 2px rgba($magenta, 0.2);
+  }
+
+  &__header {
+    font-family: $font-title;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgba($fg, 0.86);
+  }
+
+  &__canvas {
+    width: 100%;
+    height: 190px;
+    border-radius: 12px;
+    border: 1px solid rgba($line, 0.9);
+    background:
+      radial-gradient(circle at 10% 0, rgba($cyan, 0.22), transparent 60%),
+      radial-gradient(circle at 90% 100%, rgba($magenta, 0.18), transparent 60%),
+      radial-gradient(circle at 50% 120%, rgba($lime, 0.16), transparent 70%),
+      #050510;
+    cursor: crosshair;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: rgba($cyan, 0.45);
+      box-shadow: 0 0 25px rgba($cyan, 0.15);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: rgba($magenta, 0.5);
+      box-shadow: 0 0 30px rgba($magenta, 0.2);
+    }
+  }
+
+  &__hint {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: rgba($fg, 0.68);
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba($cyan, 0.22);
+  background: rgba(0, 0, 0, 0.14);
+  letter-spacing: 0.14em;
+  font-size: 11px;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: rgba($cyan, 0.45);
+    background: rgba(0, 0, 0, 0.22);
+    box-shadow: 0 0 15px rgba($cyan, 0.12);
+  }
+
+  &:focus-visible {
+    @include focusRing($cyan);
+  }
+
+  &--alt {
+    border-color: rgba($magenta, 0.22);
+
+    &:hover {
+      border-color: rgba($magenta, 0.5);
+      box-shadow: 0 0 15px rgba($magenta, 0.12);
+    }
+  }
+}
+
+.sep {
+  opacity: 0.4;
+}
+
+.hint {
+  margin: 0;
+  color: rgba($fg, 0.72);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-align: center;
+  max-width: 72ch;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: rgba($fg, 0.88);
+  }
+}
+
+.mono {
+  font-family: $font-mono;
+  color: rgba($cyan, 0.92);
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+
+  &:hover {
+    color: #00f5ff;
+    text-shadow: 0 0 12px rgba($cyan, 0.5);
+  }
+
+  &:focus {
+    outline: none;
+    color: #00f5ff;
+    text-shadow: 0 0 15px rgba($cyan, 0.6);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(-2%, -1%, 0) rotate(-1deg) scale(1.02);
+  }
+  to {
+    transform: translate3d(2%, 1%, 0) rotate(1deg) scale(1.04);
+  }
+}
+
+@keyframes sheen {
+  0% {
+    transform: translateX(-16%) rotate(0.001deg);
+    opacity: 0.48;
+  }
+  50% {
+    transform: translateX(12%) rotate(0.001deg);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(22%) rotate(0.001deg);
+    opacity: 0.55;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(0.88);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes glitchA {
+  0% {
+    clip-path: inset(0 0 78% 0);
+  }
+  12% {
+    clip-path: inset(12% 0 60% 0);
+  }
+  25% {
+    clip-path: inset(44% 0 32% 0);
+  }
+  38% {
+    clip-path: inset(65% 0 18% 0);
+  }
+  50% {
+    clip-path: inset(20% 0 68% 0);
+  }
+  62% {
+    clip-path: inset(76% 0 8% 0);
+  }
+  75% {
+    clip-path: inset(30% 0 50% 0);
+  }
+  88% {
+    clip-path: inset(8% 0 80% 0);
+  }
+  100% {
+    clip-path: inset(52% 0 22% 0);
+  }
+}
+
+@keyframes glitchB {
+  0% {
+    clip-path: inset(70% 0 10% 0);
+  }
+  16% {
+    clip-path: inset(8% 0 80% 0);
+  }
+  32% {
+    clip-path: inset(40% 0 42% 0);
+  }
+  48% {
+    clip-path: inset(18% 0 64% 0);
+  }
+  64% {
+    clip-path: inset(86% 0 6% 0);
+  }
+  80% {
+    clip-path: inset(26% 0 54% 0);
+  }
+  100% {
+    clip-path: inset(58% 0 22% 0);
+  }
+}
+
+@keyframes avatarSheen {
+  0% {
+    transform: rotate(-20deg) translateX(-22%);
+    opacity: 0.35;
+  }
+  50% {
+    transform: rotate(-20deg) translateX(14%);
+    opacity: 0.75;
+  }
+  100% {
+    transform: rotate(-20deg) translateX(22%);
+    opacity: 0.45;
+  }
+}
+
+@keyframes iconPlayIdle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes iconPauseIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
