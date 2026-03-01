@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Lab 5-6 - Badarla</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+
+  <body>
+    <audio id="bgm" class="sr-only" loop preload="auto">
+      <source type="audio/mpeg" />
+    </audio>
+
+    <div class="bg" aria-hidden="true">
+      <div class="bg__grid"></div>
+      <div class="bg__glow"></div>
+      <div class="bg__scanlines"></div>
+      <div class="bg__vignette"></div>
+    </div>
+
+    <main class="wrap">
+      <nav class="nav" aria-label="Site">
+        <a class="nav__link" href="./index.html">Lab 3-4</a>
+        <a class="nav__link nav__link--active" href="./lab_5-6.html">Lab 5-6</a>
+      </nav>
+
+      <section class="card" aria-label="Content">
+        <header class="card__header">
+          <h1 class="title title--sm">
+            <span class="title__glitch" data-text="LAB 5-6">LAB 5-6</span>
+          </h1>
+          <p class="subtitle">Animated canvas with bouncing text</p>
+        </header>
+
+        <div class="card__body">
+          <div style="margin-top: 8px;">
+            <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 12px;">Bouncing Text Animation</div>
+            <canvas id="animCanvas" style="width: 100%; height: 300px; border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; cursor: default;"></canvas>
+            <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.06em; color: rgba(234, 242, 255, 0.68);">Text reflects from edges and changes color.</p>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 12px;">Static Triangles (SVG)</div>
+            <div style="border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 280px;">
+              <svg id="trianglesSvg" viewBox="0 0 560 200" style="width: 100%; height: auto; max-width: 600px;">
+                <defs>
+                  <filter id="glow1">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+                
+                <g id="triangle1" transform="translate(70, 100) rotate(45)">
+                  <polygon points="-13.33,-53.33 26.67,26.67 -13.33,26.67" fill="none" stroke="#00f5ff" stroke-width="2" filter="url(#glow1)"/>
+                  <animateTransform 
+                    attributeName="transform" 
+                    attributeType="XML" 
+                    type="rotate" 
+                    from="0 0 0" 
+                    to="360 0 0" 
+                    dur="3s" 
+                    repeatCount="indefinite"
+                    additive="sum"/>
+                </g>
+                
+                <g id="triangle2" transform="translate(210, 100)">
+                  <polygon points="-11.67,-46.67 23.33,23.33 -11.67,23.33" fill="none" stroke="#ff2bd6" stroke-width="2" filter="url(#glow1)"/>
+                  <animateTransform 
+                    attributeName="transform" 
+                    attributeType="XML" 
+                    type="rotate" 
+                    from="0 0 0" 
+                    to="360 0 0" 
+                    dur="3s" 
+                    repeatCount="indefinite"
+                    additive="sum"/>
+                </g>
+                
+                <g id="triangle3" transform="translate(350, 100) rotate(-30)">
+                  <polygon points="-15,-60 30,30 -15,30" fill="none" stroke="#b7ff2a" stroke-width="2" filter="url(#glow1)"/>
+                  <animateTransform 
+                    attributeName="transform" 
+                    attributeType="XML" 
+                    type="rotate" 
+                    from="0 0 0" 
+                    to="360 0 0" 
+                    dur="3s" 
+                    repeatCount="indefinite"
+                    additive="sum"/>
+                </g>
+                
+                <g id="triangle4" transform="translate(490, 100) rotate(90)">
+                  <polygon points="-12.67,-50.67 25.33,25.33 -12.67,25.33" fill="none" stroke="#ffbf36" stroke-width="2" filter="url(#glow1)"/>
+                  <animateTransform 
+                    attributeName="transform" 
+                    attributeType="XML" 
+                    type="rotate" 
+                    from="0 0 0" 
+                    to="360 0 0" 
+                    dur="3s" 
+                    repeatCount="indefinite"
+                    additive="sum"/>
+                </g>
+              </svg>
+            </div>
+            <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.06em; color: rgba(234, 242, 255, 0.68);">Right triangles positioned at different angles.</p>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 12px;">Diagonal Text Movement</div>
+            <canvas id="diagonalCanvas" style="width: 100%; height: 300px; border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; cursor: default;"></canvas>
+            <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.06em; color: rgba(234, 242, 255, 0.68);">Text moves diagonally and changes character set at corners.</p>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 12px;">Circular Motion</div>
+            <canvas id="circularCanvas" style="width: 100%; height: 300px; border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; cursor: default;"></canvas>
+            <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.06em; color: rgba(234, 242, 255, 0.68);">Dot moves in circular path with constant speed, adjusts on resize.</p>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 12px;">Rotating Triangles with Moving Center</div>
+            <canvas id="orbitCanvas" style="width: 100%; height: 300px; border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; cursor: default;"></canvas>
+            <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.06em; color: rgba(234, 242, 255, 0.68);">Triangles orbit around center point moving horizontally.</p>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 12px;">Solar System Simulation</div>
+            <canvas id="solarCanvas" style="width: 100%; height: 400px; border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; cursor: default;"></canvas>
+            <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.06em; color: rgba(234, 242, 255, 0.68);">Planets orbit at different speeds. Mars synchronized with Earth (2:1 ratio).</p>
+          </div>
+        </div>
+
+        <footer class="card__footer">
+          <span class="chip">LAB_5-6</span>
+          <span class="sep" aria-hidden="true">/</span>
+          <span class="chip chip--alt">CANVAS ANIMATION</span>
+        </footer>
+      </section>
+
+      <p class="hint">
+        <span class="mono">← →</span> switch pages · <span class="mono">Space</span> music on/off
+      </p>
+    </main>
+
+    <script>
+      (() => {
+        const audio = document.getElementById("bgm");
+        if (!audio) return;
+
+        const params = new URLSearchParams(window.location.search);
+        const trackFile = params.get("track") || "Fur_Vijay.mp3";
+
+        const bgmSource = audio.querySelector("source");
+        if (bgmSource) {
+          bgmSource.src = `./assets/${trackFile}`;
+          audio.load();
+        }
+
+        const toggleBgm = async () => {
+          if (audio.paused) {
+            try {
+              await audio.play();
+            } catch {}
+          } else {
+            audio.pause();
+          }
+        };
+
+        const EXIT_DURATION = 320;
+        const navigateTo = (url) => {
+          const wrap = document.querySelector(".wrap");
+          if (wrap) wrap.classList.add("page-exit");
+          setTimeout(() => { location.href = url; }, EXIT_DURATION);
+        };
+
+        document.querySelectorAll(".nav__link").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const href = link.getAttribute("href") || "";
+            if (href && !href.startsWith("#") && new URL(link.href, location.href).pathname !== location.pathname) {
+              e.preventDefault();
+              let url = link.href;
+              if (!url.includes("?")) url += (window.location.search || "");
+              navigateTo(url);
+            }
+          });
+        });
+
+        document.addEventListener("keydown", (e) => {
+          const target = e.target;
+          if (target?.closest?.("audio[controls]") || target?.closest?.("input") || target?.closest?.("textarea")) return;
+          if (e.code === "Space" && !e.defaultPrevented) {
+            e.preventDefault();
+            toggleBgm();
+          } else if (e.code === "ArrowLeft") {
+            e.preventDefault();
+            navigateTo("./index.html" + window.location.search);
+          } else if (e.code === "ArrowRight") {
+            e.preventDefault();
+            navigateTo("./index.html" + window.location.search);
+          }
+        });
+
+        const card = document.querySelector(".card");
+        if (card) {
+          const tiltStrength = 8;
+          const handleMove = (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            card.style.setProperty("--mouse-x", String(x * 100));
+            card.style.setProperty("--mouse-y", String(y * 100));
+            card.style.setProperty("--tilt-x", String((y - 0.5) * -tiltStrength + "deg"));
+            card.style.setProperty("--tilt-y", String((x - 0.5) * tiltStrength + "deg"));
+          };
+          const handleLeave = () => {
+            card.style.setProperty("--tilt-x", "0deg");
+            card.style.setProperty("--tilt-y", "0deg");
+          };
+          card.addEventListener("pointermove", handleMove);
+          card.addEventListener("pointerleave", handleLeave);
+        }
+
+        const canvas = document.getElementById("animCanvas");
+        if (canvas && canvas.getContext) {
+          const ctx = canvas.getContext("2d");
+
+          const resize = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          };
+
+          resize();
+          window.addEventListener("resize", resize);
+
+          const colors = [
+            "#00f5ff",
+            "#ff2bd6",
+            "#b7ff2a",
+            "#ffbf36",
+            "#ff6b42",
+            "#00ffaa",
+            "#ff00ff",
+            "#00ffff"
+          ];
+
+          let colorIndex = 0;
+          let x = 50;
+          let y = 150;
+          let speedX = 3;
+          const text = "THEODORE BADARLA";
+          const fontSize = 28;
+
+          const animate = () => {
+            const rect = canvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            ctx.font = `bold ${fontSize}px Orbitron, sans-serif`;
+            ctx.textBaseline = "middle";
+
+            const textWidth = ctx.measureText(text).width;
+
+            x += speedX;
+
+            if (x <= 0) {
+              x = 0;
+              speedX = Math.abs(speedX);
+              colorIndex = (colorIndex + 1) % colors.length;
+            } else if (x + textWidth >= width) {
+              x = width - textWidth;
+              speedX = -Math.abs(speedX);
+              colorIndex = (colorIndex + 1) % colors.length;
+            }
+
+            y = height / 2;
+
+            const currentColor = colors[colorIndex];
+            ctx.fillStyle = currentColor;
+            ctx.shadowColor = currentColor;
+            ctx.shadowBlur = 20;
+            ctx.fillText(text, x, y);
+
+            ctx.shadowBlur = 40;
+            ctx.fillText(text, x, y);
+
+            requestAnimationFrame(animate);
+          };
+
+          animate();
+        }
+
+        const diagonalCanvas = document.getElementById("diagonalCanvas");
+        if (diagonalCanvas && diagonalCanvas.getContext) {
+          const ctx2 = diagonalCanvas.getContext("2d");
+
+          const resize2 = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = diagonalCanvas.getBoundingClientRect();
+            diagonalCanvas.width = rect.width * dpr;
+            diagonalCanvas.height = rect.height * dpr;
+            ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+          };
+
+          resize2();
+          window.addEventListener("resize", resize2);
+
+          const textSets = [
+            "CYBERPUNK 2077",
+            "NEON NIGHTS",
+            "DIGITAL DREAMS",
+            "SYNTH WAVE",
+            "RETRO FUTURE",
+            "MATRIX CODE",
+            "BYTE RIDER"
+          ];
+
+          let textIndex = 0;
+          let currentText = textSets[textIndex];
+          let x2 = 50;
+          let y2 = 50;
+          let speedX2 = 2.5;
+          let speedY2 = 2.5;
+          const fontSize2 = 24;
+          const textColor = "#00f5ff";
+
+          const animateDiagonal = () => {
+            const rect = diagonalCanvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            ctx2.clearRect(0, 0, width, height);
+
+            ctx2.font = `bold ${fontSize2}px Orbitron, sans-serif`;
+            ctx2.textBaseline = "middle";
+
+            const textWidth = ctx2.measureText(currentText).width;
+            const textHeight = fontSize2;
+
+            x2 += speedX2;
+            y2 += speedY2;
+
+            let cornerHit = false;
+
+            if (x2 <= 0) {
+              x2 = 0;
+              speedX2 = Math.abs(speedX2);
+              cornerHit = true;
+            } else if (x2 + textWidth >= width) {
+              x2 = width - textWidth;
+              speedX2 = -Math.abs(speedX2);
+              cornerHit = true;
+            }
+
+            if (y2 - textHeight / 2 <= 0) {
+              y2 = textHeight / 2;
+              speedY2 = Math.abs(speedY2);
+              cornerHit = true;
+            } else if (y2 + textHeight / 2 >= height) {
+              y2 = height - textHeight / 2;
+              speedY2 = -Math.abs(speedY2);
+              cornerHit = true;
+            }
+
+            if (cornerHit) {
+              textIndex = (textIndex + 1) % textSets.length;
+              currentText = textSets[textIndex];
+            }
+
+            ctx2.fillStyle = textColor;
+            ctx2.shadowColor = textColor;
+            ctx2.shadowBlur = 20;
+            ctx2.fillText(currentText, x2, y2);
+
+            ctx2.shadowBlur = 40;
+            ctx2.fillText(currentText, x2, y2);
+
+            requestAnimationFrame(animateDiagonal);
+          };
+
+          animateDiagonal();
+        }
+
+        const circularCanvas = document.getElementById("circularCanvas");
+        if (circularCanvas && circularCanvas.getContext) {
+          const ctx3 = circularCanvas.getContext("2d");
+          let angle = 0;
+          let radius = 0;
+          let centerX = 0;
+          let centerY = 0;
+          let angularSpeed = 0.02;
+
+          const resize3 = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = circularCanvas.getBoundingClientRect();
+            circularCanvas.width = rect.width * dpr;
+            circularCanvas.height = rect.height * dpr;
+            ctx3.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            centerX = rect.width / 2;
+            centerY = rect.height / 2;
+            radius = Math.min(rect.width, rect.height) * 0.35;
+
+            const circumference = 2 * Math.PI * radius;
+            angularSpeed = 150 / circumference;
+          };
+
+          resize3();
+          window.addEventListener("resize", resize3);
+
+          const animateCircular = () => {
+            const rect = circularCanvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            ctx3.clearRect(0, 0, width, height);
+
+            ctx3.strokeStyle = "rgba(234, 242, 255, 0.2)";
+            ctx3.lineWidth = 1;
+            ctx3.beginPath();
+            ctx3.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx3.stroke();
+
+            angle += angularSpeed;
+            if (angle >= Math.PI * 2) {
+              angle -= Math.PI * 2;
+            }
+
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
+
+            const gradient = ctx3.createRadialGradient(x, y, 0, x, y, 15);
+            gradient.addColorStop(0, "#ff2bd6");
+            gradient.addColorStop(0.5, "rgba(255, 43, 214, 0.5)");
+            gradient.addColorStop(1, "rgba(255, 43, 214, 0)");
+
+            ctx3.fillStyle = gradient;
+            ctx3.beginPath();
+            ctx3.arc(x, y, 15, 0, Math.PI * 2);
+            ctx3.fill();
+
+            ctx3.fillStyle = "#ff2bd6";
+            ctx3.shadowColor = "#ff2bd6";
+            ctx3.shadowBlur = 20;
+            ctx3.beginPath();
+            ctx3.arc(x, y, 8, 0, Math.PI * 2);
+            ctx3.fill();
+
+            ctx3.shadowBlur = 0;
+
+            requestAnimationFrame(animateCircular);
+          };
+
+          animateCircular();
+        }
+
+        const orbitCanvas = document.getElementById("orbitCanvas");
+        if (orbitCanvas && orbitCanvas.getContext) {
+          const ctx4 = orbitCanvas.getContext("2d");
+          let centerX = 100;
+          let centerY = 150;
+          let speedX = 2;
+          let angle = 0;
+          const orbitRadius = 60;
+          const rotationSpeed = 0.03;
+
+          const triangles = [
+            { angleOffset: 0, color: "#00f5ff", size: 20 },
+            { angleOffset: Math.PI * 2 / 3, color: "#ff2bd6", size: 18 },
+            { angleOffset: Math.PI * 4 / 3, color: "#b7ff2a", size: 22 }
+          ];
+
+          const resize4 = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = orbitCanvas.getBoundingClientRect();
+            orbitCanvas.width = rect.width * dpr;
+            orbitCanvas.height = rect.height * dpr;
+            ctx4.setTransform(dpr, 0, 0, dpr, 0, 0);
+            centerY = rect.height / 2;
+          };
+
+          resize4();
+          window.addEventListener("resize", resize4);
+
+          const drawTriangle = (x, y, size, rotation, color) => {
+            ctx4.save();
+            ctx4.translate(x, y);
+            ctx4.rotate(rotation);
+
+            ctx4.strokeStyle = color;
+            ctx4.lineWidth = 2;
+            ctx4.shadowColor = color;
+            ctx4.shadowBlur = 15;
+
+            ctx4.beginPath();
+            ctx4.moveTo(0, -size);
+            ctx4.lineTo(size * 0.866, size * 0.5);
+            ctx4.lineTo(-size * 0.866, size * 0.5);
+            ctx4.closePath();
+            ctx4.stroke();
+
+            ctx4.restore();
+          };
+
+          const animateOrbit = () => {
+            const rect = orbitCanvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            ctx4.clearRect(0, 0, width, height);
+
+            centerX += speedX;
+            if (centerX <= orbitRadius + 20) {
+              centerX = orbitRadius + 20;
+              speedX = Math.abs(speedX);
+            } else if (centerX >= width - orbitRadius - 20) {
+              centerX = width - orbitRadius - 20;
+              speedX = -Math.abs(speedX);
+            }
+
+            ctx4.strokeStyle = "rgba(234, 242, 255, 0.15)";
+            ctx4.lineWidth = 1;
+            ctx4.beginPath();
+            ctx4.arc(centerX, centerY, orbitRadius, 0, Math.PI * 2);
+            ctx4.stroke();
+
+            ctx4.fillStyle = "rgba(255, 191, 54, 0.8)";
+            ctx4.shadowColor = "#ffbf36";
+            ctx4.shadowBlur = 10;
+            ctx4.beginPath();
+            ctx4.arc(centerX, centerY, 5, 0, Math.PI * 2);
+            ctx4.fill();
+            ctx4.shadowBlur = 0;
+
+            angle += rotationSpeed;
+            if (angle >= Math.PI * 2) {
+              angle -= Math.PI * 2;
+            }
+
+            triangles.forEach((triangle) => {
+              const currentAngle = angle + triangle.angleOffset;
+              const x = centerX + orbitRadius * Math.cos(currentAngle);
+              const y = centerY + orbitRadius * Math.sin(currentAngle);
+              drawTriangle(x, y, triangle.size, currentAngle + Math.PI / 2, triangle.color);
+            });
+
+            requestAnimationFrame(animateOrbit);
+          };
+
+          animateOrbit();
+        }
+
+        const solarCanvas = document.getElementById("solarCanvas");
+        if (solarCanvas && solarCanvas.getContext) {
+          const ctx5 = solarCanvas.getContext("2d");
+          let centerX = 0;
+          let centerY = 0;
+          let time = 0;
+
+          const planets = [
+            { name: "Mercury", distance: 50, size: 4, color: "#9ca3af", speed: 4.0 },
+            { name: "Venus", distance: 75, size: 6, color: "#fbbf24", speed: 3.0 },
+            { name: "Earth", distance: 110, size: 7, color: "#3b82f6", speed: 2.0, hasMoon: true },
+            { name: "Mars", distance: 145, size: 5, color: "#ef4444", speed: 1.0 },
+            { name: "Jupiter", distance: 190, size: 12, color: "#f97316", speed: 0.5 },
+            { name: "Saturn", distance: 235, size: 10, color: "#eab308", speed: 0.3 }
+          ];
+
+          const resize5 = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = solarCanvas.getBoundingClientRect();
+            solarCanvas.width = rect.width * dpr;
+            solarCanvas.height = rect.height * dpr;
+            ctx5.setTransform(dpr, 0, 0, dpr, 0, 0);
+            centerX = rect.width / 2;
+            centerY = rect.height / 2;
+          };
+
+          resize5();
+          window.addEventListener("resize", resize5);
+
+          const drawPlanet = (x, y, size, color, hasGlow = true) => {
+            if (hasGlow) {
+              const gradient = ctx5.createRadialGradient(x, y, 0, x, y, size * 2);
+              gradient.addColorStop(0, color);
+              gradient.addColorStop(0.5, color + "80");
+              gradient.addColorStop(1, color + "00");
+              ctx5.fillStyle = gradient;
+              ctx5.beginPath();
+              ctx5.arc(x, y, size * 2, 0, Math.PI * 2);
+              ctx5.fill();
+            }
+
+            ctx5.fillStyle = color;
+            ctx5.shadowColor = color;
+            ctx5.shadowBlur = 10;
+            ctx5.beginPath();
+            ctx5.arc(x, y, size, 0, Math.PI * 2);
+            ctx5.fill();
+            ctx5.shadowBlur = 0;
+          };
+
+          const animateSolar = () => {
+            const rect = solarCanvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            ctx5.clearRect(0, 0, width, height);
+
+            planets.forEach((planet) => {
+              ctx5.strokeStyle = "rgba(234, 242, 255, 0.08)";
+              ctx5.lineWidth = 1;
+              ctx5.beginPath();
+              ctx5.arc(centerX, centerY, planet.distance, 0, Math.PI * 2);
+              ctx5.stroke();
+            });
+
+            const sunGradient = ctx5.createRadialGradient(centerX, centerY, 0, centerX, centerY, 25);
+            sunGradient.addColorStop(0, "#ffff00");
+            sunGradient.addColorStop(0.3, "#ffaa00");
+            sunGradient.addColorStop(1, "#ff6600");
+            ctx5.fillStyle = sunGradient;
+            ctx5.shadowColor = "#ffaa00";
+            ctx5.shadowBlur = 30;
+            ctx5.beginPath();
+            ctx5.arc(centerX, centerY, 15, 0, Math.PI * 2);
+            ctx5.fill();
+            ctx5.shadowBlur = 0;
+
+            time += 0.01;
+
+            planets.forEach((planet) => {
+              const angle = time * planet.speed;
+              const x = centerX + planet.distance * Math.cos(angle);
+              const y = centerY + planet.distance * Math.sin(angle);
+
+              drawPlanet(x, y, planet.size, planet.color);
+
+              if (planet.hasMoon) {
+                const moonDistance = 15;
+                const moonAngle = time * 6.0;
+                const moonX = x + moonDistance * Math.cos(moonAngle);
+                const moonY = y + moonDistance * Math.sin(moonAngle);
+                drawPlanet(moonX, moonY, 2, "#d1d5db", false);
+              }
+            });
+
+            requestAnimationFrame(animateSolar);
+          };
+
+          animateSolar();
+        }
+      })();
+    </script>
+  </body>
+</html>
