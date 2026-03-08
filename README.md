@@ -1,6 +1,6 @@
-# Labs 3-4 & 5-6: Cyberpunk Web Applications
+# Labs 3-4, 5-6 & 7-9: Cyberpunk Web Applications
 
-A collection of interactive web pages with cyberpunk aesthetics, featuring custom audio player, canvas animations, and SVG graphics.
+A collection of interactive web pages with cyberpunk aesthetics, featuring custom audio player, canvas animations, SVG graphics, and cursor tracking.
 
 ## Lab 3-4: Cyberpunk Profile Page
 
@@ -31,9 +31,23 @@ Advanced animation showcase featuring multiple canvas and SVG demonstrations.
 5. **Rotating Triangles with Moving Center** – Three triangles orbit around horizontally moving center point
 6. **Solar System Simulation** – Sun, planets with different orbital speeds, Earth's moon, and Mars synchronized with Earth (2:1 ratio)
 
-### Keyboard Controls (Both Labs)
+## Lab 7-9: Cursor Position Tracker
 
-- `←` `→` – Switch between Lab 3-4 and Lab 5-6
+**Location**: `lab_7-9.html`
+
+Real-time mouse cursor position tracking with visual feedback.
+
+### Features
+
+- **Two Text Fields (X and Y)** – Display real-time cursor screen coordinates
+- **Visual Cursor Indicator** – Glowing circle that follows cursor position
+- **Multiple Coordinate Systems** – Shows relative, absolute, and page coordinates
+- **Cyberpunk Styling** – Neon-styled input fields with glow effects
+- **Responsive Tracking Area** – Updates instantly as cursor moves
+
+### Keyboard Controls (All Labs)
+
+- `←` `→` – Navigate between labs (Lab 3-4 ↔ Lab 5-6 ↔ Lab 7-9)
 - `Space` – Toggle background music on/off
 
 ## Quick Start
@@ -54,6 +68,7 @@ npm run serve
 Once the server is running:
 - **Lab 3-4**: [http://localhost:3000/index.html](http://localhost:3000/index.html)
 - **Lab 5-6**: [http://localhost:3000/lab_5-6.html](http://localhost:3000/lab_5-6.html)
+- **Lab 7-9**: [http://localhost:3000/lab_7-9.html](http://localhost:3000/lab_7-9.html)
 
 You can also navigate between labs using the navigation menu at the top or keyboard arrows.
 
@@ -73,6 +88,7 @@ npm run serve
 lab_3-4_badarla/
 ├── index.html          # Lab 3-4: Profile page with audio player and drawing pad
 ├── lab_5-6.html        # Lab 5-6: Canvas & SVG animations showcase
+├── lab_7-9.html        # Lab 7-9: Cursor position tracker
 ├── scss/               # SCSS source files
 │   └── styles.scss     # Main stylesheet (cyberpunk theme)
 ├── css/                # Compiled CSS
@@ -89,7 +105,8 @@ lab_3-4_badarla/
 ### HTML Pages
 - **Lab 3-4**: Open `index.html` in browser
 - **Lab 5-6**: Open `lab_5-6.html` in browser
-- Both pages share the same CSS and navigation system
+- **Lab 7-9**: Open `lab_7-9.html` in browser
+- All pages share the same CSS and navigation system
 
 ### Stylesheets
 - **Source**: `scss/styles.scss` (edit this file)
