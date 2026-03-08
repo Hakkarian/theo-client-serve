@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Lab 11-12 - Badarla</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+
+  <body>
+    <audio id="bgm" class="sr-only" loop preload="auto">
+      <source type="audio/mpeg" />
+    </audio>
+
+    <div class="bg" aria-hidden="true">
+      <div class="bg__grid"></div>
+      <div class="bg__glow"></div>
+      <div class="bg__scanlines"></div>
+      <div class="bg__vignette"></div>
+    </div>
+
+    <main class="wrap">
+      <nav class="nav" aria-label="Site">
+        <a class="nav__link" href="./index.html">Lab 3-4</a>
+        <a class="nav__link" href="./lab_5-6.html">Lab 5-6</a>
+        <a class="nav__link" href="./lab_7-9.html">Lab 7-9</a>
+        <a class="nav__link nav__link--active" href="./lab_11-12.html">Lab 11-12</a>
+      </nav>
+
+      <section class="card" aria-label="Content">
+        <header class="card__header">
+          <h1 class="title title--sm">
+            <span class="title__glitch" data-text="КОПІЮВАННЯ ФАЙЛУ">КОПІЮВАННЯ ФАЙЛУ</span>
+          </h1>
+          <p class="subtitle">File Copy Utility</p>
+        </header>
+
+        <div class="card__body">
+          <div style="margin-top: 8px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+              
+              <!-- Left Panel: Source File -->
+              <div style="border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; padding: 20px;">
+                <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 16px; text-align: center;">ВИБІР ФАЙЛУ ДЛЯ КОПІЮВАННЯ</div>
+                
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; min-height: 200px;">
+                  <div style="width: 100%; height: 150px; border: 2px dashed rgba(0, 245, 255, 0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; background: rgba(0, 245, 255, 0.05);" id="sourceDropArea">
+                    <div style="text-align: center; pointer-events: none;">
+                      <div style="font-size: 36px; margin-bottom: 8px; color: #00f5ff;">📁</div>
+                      <div style="font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(234, 242, 255, 0.68);">Click or Drag File Here</div>
+                    </div>
+                  </div>
+                  
+                  <input type="file" id="sourceFileInput" style="display: none;" />
+                  
+                  <div id="sourceFileInfo" style="width: 100%; padding: 12px; background: rgba(0, 245, 255, 0.08); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 6px; display: none;">
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #00f5ff; margin-bottom: 6px; word-break: break-all;" id="sourceFileName">No file selected</div>
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 10px; color: rgba(234, 242, 255, 0.6);" id="sourceFileSize">0 bytes</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Panel: Destination Directory -->
+              <div style="border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(183, 255, 42, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; padding: 20px;">
+                <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 16px; text-align: center;">ВИБІР КАТАЛОГУ ПРИЗНАЧЕННЯ</div>
+                
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; min-height: 200px;">
+                  <button id="selectDirBtn" type="button" style="width: 100%; height: 150px; border: 2px dashed rgba(183, 255, 42, 0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; background: rgba(183, 255, 42, 0.05); font-family: inherit; color: inherit;">
+                    <div style="text-align: center; pointer-events: none;">
+                      <div style="font-size: 36px; margin-bottom: 8px; color: #b7ff2a;">📂</div>
+                      <div style="font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(234, 242, 255, 0.68);">Click to Select Directory</div>
+                    </div>
+                  </button>
+                  
+                  <div id="destDirInfo" style="width: 100%; padding: 12px; background: rgba(183, 255, 42, 0.08); border: 1px solid rgba(183, 255, 42, 0.3); border-radius: 6px; display: none;">
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #b7ff2a; margin-bottom: 6px; word-break: break-all;" id="destDirName">No directory selected</div>
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 10px; color: rgba(234, 242, 255, 0.6);">Ready to copy</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Copy Button and Status -->
+            <div style="text-align: center; margin-top: 24px;">
+              <button id="copyBtn" type="button" disabled style="padding: 16px 48px; font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(234, 242, 255, 0.4); background: rgba(255, 43, 214, 0.15); border: 2px solid rgba(255, 43, 214, 0.3); border-radius: 8px; cursor: not-allowed; transition: all 0.3s; box-shadow: 0 0 0 rgba(255, 43, 214, 0);">
+                Копіювати
+              </button>
+            </div>
+
+            <div id="statusArea" style="margin-top: 24px; padding: 16px; background: rgba(234, 242, 255, 0.04); border-radius: 8px; border: 1px solid rgba(234, 242, 255, 0.15); display: none;">
+              <div style="font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(234, 242, 255, 0.86); text-align: center;" id="statusMessage"></div>
+            </div>
+
+            <p style="margin: 20px 0 0; font-size: 11px; letter-spacing: 0.06em; color: rgba(234, 242, 255, 0.68); text-align: center;">
+              Note: Due to browser security, files are downloaded instead of saved to selected directory.
+            </p>
+          </div>
+        </div>
+
+        <footer class="card__footer">
+          <span class="chip">LAB_11-12</span>
+          <span class="sep" aria-hidden="true">/</span>
+          <span class="chip chip--alt">FILE COPY</span>
+        </footer>
+      </section>
+
+      <p class="hint">
+        <span class="mono">← →</span> switch pages · <span class="mono">Space</span> music on/off
+      </p>
+    </main>
+
+    <script>
+      (() => {
+        const audio = document.getElementById("bgm");
+        if (!audio) return;
+
+        const params = new URLSearchParams(window.location.search);
+        const trackFile = params.get("track") || "Fur_Vijay.mp3";
+
+        const bgmSource = audio.querySelector("source");
+        if (bgmSource) {
+          bgmSource.src = `./assets/${trackFile}`;
+          audio.load();
+        }
+
+        const toggleBgm = async () => {
+          if (audio.paused) {
+            try {
+              await audio.play();
+            } catch {}
+          } else {
+            audio.pause();
+          }
+        };
+
+        const EXIT_DURATION = 320;
+        const navigateTo = (url) => {
+          const wrap = document.querySelector(".wrap");
+          if (wrap) wrap.classList.add("page-exit");
+          setTimeout(() => { location.href = url; }, EXIT_DURATION);
+        };
+
+        document.querySelectorAll(".nav__link").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const href = link.getAttribute("href") || "";
+            if (href && !href.startsWith("#") && new URL(link.href, location.href).pathname !== location.pathname) {
+              e.preventDefault();
+              let url = link.href;
+              if (!url.includes("?")) url += (window.location.search || "");
+              navigateTo(url);
+            }
+          });
+        });
+
+        document.addEventListener("keydown", (e) => {
+          const target = e.target;
+          if (target?.closest?.("audio[controls]") || target?.closest?.("input") || target?.closest?.("textarea")) return;
+          if (e.code === "Space" && !e.defaultPrevented) {
+            e.preventDefault();
+            toggleBgm();
+          } else if (e.code === "ArrowLeft") {
+            e.preventDefault();
+            navigateTo("./lab_7-9.html" + window.location.search);
+          } else if (e.code === "ArrowRight") {
+            e.preventDefault();
+            navigateTo("./lab_7-9.html" + window.location.search);
+          }
+        });
+
+        const card = document.querySelector(".card");
+        if (card) {
+          const tiltStrength = 8;
+          const handleMove = (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            card.style.setProperty("--mouse-x", String(x * 100));
+            card.style.setProperty("--mouse-y", String(y * 100));
+            card.style.setProperty("--tilt-x", String((y - 0.5) * -tiltStrength + "deg"));
+            card.style.setProperty("--tilt-y", String((x - 0.5) * tiltStrength + "deg"));
+          };
+          const handleLeave = () => {
+            card.style.setProperty("--tilt-x", "0deg");
+            card.style.setProperty("--tilt-y", "0deg");
+          };
+          card.addEventListener("pointermove", handleMove);
+          card.addEventListener("pointerleave", handleLeave);
+        }
+
+        // File Copy Functionality
+        const sourceDropArea = document.getElementById("sourceDropArea");
+        const sourceFileInput = document.getElementById("sourceFileInput");
+        const sourceFileInfo = document.getElementById("sourceFileInfo");
+        const sourceFileName = document.getElementById("sourceFileName");
+        const sourceFileSize = document.getElementById("sourceFileSize");
+        
+        const selectDirBtn = document.getElementById("selectDirBtn");
+        const destDirInfo = document.getElementById("destDirInfo");
+        const destDirName = document.getElementById("destDirName");
+        
+        const copyBtn = document.getElementById("copyBtn");
+        const statusArea = document.getElementById("statusArea");
+        const statusMessage = document.getElementById("statusMessage");
+
+        let selectedFile = null;
+        let selectedDirHandle = null;
+
+        const formatFileSize = (bytes) => {
+          if (bytes === 0) return "0 Bytes";
+          const k = 1024;
+          const sizes = ["Bytes", "KB", "MB", "GB"];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
+        };
+
+        const showStatus = (message, isError = false) => {
+          statusMessage.textContent = message;
+          statusMessage.style.color = isError ? "#ff6b42" : "#b7ff2a";
+          statusArea.style.display = "block";
+          setTimeout(() => {
+            if (!isError) statusArea.style.display = "none";
+          }, 5000);
+        };
+
+        const updateCopyButton = () => {
+          if (selectedFile && selectedDirHandle) {
+            copyBtn.disabled = false;
+            copyBtn.style.cursor = "pointer";
+            copyBtn.style.color = "#eaf2ff";
+            copyBtn.style.background = "rgba(255, 43, 214, 0.3)";
+            copyBtn.style.borderColor = "#ff2bd6";
+            copyBtn.style.boxShadow = "0 0 20px rgba(255, 43, 214, 0.4)";
+          } else {
+            copyBtn.disabled = true;
+            copyBtn.style.cursor = "not-allowed";
+            copyBtn.style.color = "rgba(234, 242, 255, 0.4)";
+            copyBtn.style.background = "rgba(255, 43, 214, 0.15)";
+            copyBtn.style.borderColor = "rgba(255, 43, 214, 0.3)";
+            copyBtn.style.boxShadow = "0 0 0 rgba(255, 43, 214, 0)";
+          }
+        };
+
+        const handleFileSelect = (file) => {
+          selectedFile = file;
+          sourceFileName.textContent = file.name;
+          sourceFileSize.textContent = formatFileSize(file.size);
+          sourceFileInfo.style.display = "block";
+          updateCopyButton();
+          showStatus(`File selected: ${file.name}`);
+        };
+
+        // Source file selection
+        sourceDropArea.addEventListener("click", () => {
+          sourceFileInput.click();
+        });
+
+        sourceFileInput.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            handleFileSelect(file);
+          }
+        });
+
+        // Drag and drop for source file
+        sourceDropArea.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          sourceDropArea.style.borderColor = "rgba(0, 245, 255, 0.8)";
+          sourceDropArea.style.background = "rgba(0, 245, 255, 0.12)";
+        });
+
+        sourceDropArea.addEventListener("dragleave", () => {
+          sourceDropArea.style.borderColor = "rgba(0, 245, 255, 0.4)";
+          sourceDropArea.style.background = "rgba(0, 245, 255, 0.05)";
+        });
+
+        sourceDropArea.addEventListener("drop", (e) => {
+          e.preventDefault();
+          sourceDropArea.style.borderColor = "rgba(0, 245, 255, 0.4)";
+          sourceDropArea.style.background = "rgba(0, 245, 255, 0.05)";
+          
+          const file = e.dataTransfer.files[0];
+          if (file) {
+            handleFileSelect(file);
+          }
+        });
+
+        // Destination directory selection
+        selectDirBtn.addEventListener("click", async () => {
+          try {
+            if ('showDirectoryPicker' in window) {
+              selectedDirHandle = await window.showDirectoryPicker();
+              destDirName.textContent = `Directory: ${selectedDirHandle.name}`;
+              destDirInfo.style.display = "block";
+              updateCopyButton();
+              showStatus(`Directory selected: ${selectedDirHandle.name}`);
+            } else {
+              showStatus("Your browser doesn't support directory selection. File will be downloaded instead.", false);
+              selectedDirHandle = { name: "Downloads" };
+              destDirName.textContent = "Downloads folder (browser default)";
+              destDirInfo.style.display = "block";
+              updateCopyButton();
+            }
+          } catch (err) {
+            if (err.name !== "AbortError") {
+              showStatus(`Error selecting directory: ${err.message}`, true);
+            }
+          }
+        });
+
+        // Copy button functionality
+        copyBtn.addEventListener("click", async () => {
+          if (!selectedFile) {
+            showStatus("Please select a source file first", true);
+            return;
+          }
+
+          try {
+            copyBtn.disabled = true;
+            copyBtn.textContent = "COPYING...";
+            
+            if (selectedDirHandle && selectedDirHandle.getFileHandle) {
+              const newFileHandle = await selectedDirHandle.getFileHandle(selectedFile.name, { create: true });
+              const writable = await newFileHandle.createWritable();
+              await writable.write(selectedFile);
+              await writable.close();
+              
+              showStatus(`✓ File successfully copied to ${selectedDirHandle.name}/${selectedFile.name}`);
+            } else {
+              const blob = new Blob([await selectedFile.arrayBuffer()], { type: selectedFile.type });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = selectedFile.name;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+              
+              showStatus(`✓ File downloaded: ${selectedFile.name} (check your Downloads folder)`);
+            }
+            
+            copyBtn.textContent = "КОПІЮВАТИ";
+            copyBtn.disabled = false;
+          } catch (err) {
+            showStatus(`✗ Copy failed: ${err.message}`, true);
+            copyBtn.textContent = "КОПІЮВАТИ";
+            copyBtn.disabled = false;
+          }
+        });
+
+        // Hover effects
+        selectDirBtn.addEventListener("mouseenter", () => {
+          if (!selectDirBtn.disabled) {
+            selectDirBtn.style.borderColor = "rgba(183, 255, 42, 0.8)";
+            selectDirBtn.style.background = "rgba(183, 255, 42, 0.12)";
+          }
+        });
+
+        selectDirBtn.addEventListener("mouseleave", () => {
+          selectDirBtn.style.borderColor = "rgba(183, 255, 42, 0.4)";
+          selectDirBtn.style.background = "rgba(183, 255, 42, 0.05)";
+        });
+      })();
+    </script>
+  </body>
+</html>
