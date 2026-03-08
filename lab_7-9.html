@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Lab 7-9 - Badarla</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+
+  <body>
+    <audio id="bgm" class="sr-only" loop preload="auto">
+      <source type="audio/mpeg" />
+    </audio>
+
+    <div class="bg" aria-hidden="true">
+      <div class="bg__grid"></div>
+      <div class="bg__glow"></div>
+      <div class="bg__scanlines"></div>
+      <div class="bg__vignette"></div>
+    </div>
+
+    <main class="wrap">
+      <nav class="nav" aria-label="Site">
+        <a class="nav__link" href="./index.html">Lab 3-4</a>
+        <a class="nav__link" href="./lab_5-6.html">Lab 5-6</a>
+        <a class="nav__link nav__link--active" href="./lab_7-9.html">Lab 7-9</a>
+      </nav>
+
+      <section class="card" aria-label="Content">
+        <header class="card__header">
+          <h1 class="title title--sm">
+            <span class="title__glitch" data-text="LAB 7-9">LAB 7-9</span>
+          </h1>
+          <p class="subtitle">Mouse Cursor Position Tracker</p>
+        </header>
+
+        <div class="card__body">
+          <div style="margin-top: 8px;">
+            <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 12px;">Cursor Position Display</div>
+            
+            <div style="border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; padding: 30px; min-height: 400px; position: relative;" id="trackingArea">
+              <div style="display: flex; flex-direction: column; gap: 24px; max-width: 500px; margin: 0 auto;">
+                <div>
+                  <label for="xField" style="display: block; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: rgba(234, 242, 255, 0.9); margin-bottom: 8px; letter-spacing: 0.08em;">X COORDINATE</label>
+                  <input 
+                    type="text" 
+                    id="xField" 
+                    readonly 
+                    value="0"
+                    style="width: 100%; padding: 14px 18px; font-family: 'Share Tech Mono', monospace; font-size: 18px; color: #00f5ff; background: rgba(0, 245, 255, 0.08); border: 2px solid rgba(0, 245, 255, 0.6); border-radius: 8px; text-align: center; letter-spacing: 0.1em; box-shadow: 0 0 20px rgba(0, 245, 255, 0.3); transition: all 0.2s ease;"
+                  />
+                </div>
+
+                <div>
+                  <label for="yField" style="display: block; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: rgba(234, 242, 255, 0.9); margin-bottom: 8px; letter-spacing: 0.08em;">Y COORDINATE</label>
+                  <input 
+                    type="text" 
+                    id="yField" 
+                    readonly 
+                    value="0"
+                    style="width: 100%; padding: 14px 18px; font-family: 'Share Tech Mono', monospace; font-size: 18px; color: #ff2bd6; background: rgba(255, 43, 214, 0.08); border: 2px solid rgba(255, 43, 214, 0.6); border-radius: 8px; text-align: center; letter-spacing: 0.1em; box-shadow: 0 0 20px rgba(255, 43, 214, 0.3); transition: all 0.2s ease;"
+                  />
+                </div>
+
+                <div style="margin-top: 20px; padding: 20px; background: rgba(234, 242, 255, 0.04); border-radius: 8px; border: 1px solid rgba(234, 242, 255, 0.15);">
+                  <div style="font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(234, 242, 255, 0.68); line-height: 1.6;">
+                    <div style="margin-bottom: 8px;">
+                      <span style="color: #b7ff2a;">RELATIVE X:</span> <span id="relativeX">0</span> px
+                    </div>
+                    <div style="margin-bottom: 8px;">
+                      <span style="color: #b7ff2a;">RELATIVE Y:</span> <span id="relativeY">0</span> px
+                    </div>
+                    <div>
+                      <span style="color: #ffbf36;">PAGE X:</span> <span id="pageX">0</span> px · 
+                      <span style="color: #ffbf36;">PAGE Y:</span> <span id="pageY">0</span> px
+                    </div>
+                  </div>
+                </div>
+
+                <div id="cursorIndicator" style="position: absolute; width: 20px; height: 20px; border: 2px solid #b7ff2a; border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); box-shadow: 0 0 15px rgba(183, 255, 42, 0.6); opacity: 0; transition: opacity 0.2s;"></div>
+              </div>
+            </div>
+
+            <p style="margin: 10px 0 0; font-size: 11px; letter-spacing: 0.06em; color: rgba(234, 242, 255, 0.68);">Move your cursor over the tracking area to see coordinates update in real-time.</p>
+          </div>
+        </div>
+
+        <footer class="card__footer">
+          <span class="chip">LAB_7-9</span>
+          <span class="sep" aria-hidden="true">/</span>
+          <span class="chip chip--alt">CURSOR TRACKING</span>
+        </footer>
+      </section>
+
+      <p class="hint">
+        <span class="mono">← →</span> switch pages · <span class="mono">Space</span> music on/off
+      </p>
+    </main>
+
+    <script>
+      (() => {
+        const audio = document.getElementById("bgm");
+        if (!audio) return;
+
+        const params = new URLSearchParams(window.location.search);
+        const trackFile = params.get("track") || "Fur_Vijay.mp3";
+
+        const bgmSource = audio.querySelector("source");
+        if (bgmSource) {
+          bgmSource.src = `./assets/${trackFile}`;
+          audio.load();
+        }
+
+        const toggleBgm = async () => {
+          if (audio.paused) {
+            try {
+              await audio.play();
+            } catch {}
+          } else {
+            audio.pause();
+          }
+        };
+
+        const EXIT_DURATION = 320;
+        const navigateTo = (url) => {
+          const wrap = document.querySelector(".wrap");
+          if (wrap) wrap.classList.add("page-exit");
+          setTimeout(() => { location.href = url; }, EXIT_DURATION);
+        };
+
+        document.querySelectorAll(".nav__link").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const href = link.getAttribute("href") || "";
+            if (href && !href.startsWith("#") && new URL(link.href, location.href).pathname !== location.pathname) {
+              e.preventDefault();
+              let url = link.href;
+              if (!url.includes("?")) url += (window.location.search || "");
+              navigateTo(url);
+            }
+          });
+        });
+
+        document.addEventListener("keydown", (e) => {
+          const target = e.target;
+          if (target?.closest?.("audio[controls]") || target?.closest?.("input") || target?.closest?.("textarea")) return;
+          if (e.code === "Space" && !e.defaultPrevented) {
+            e.preventDefault();
+            toggleBgm();
+          } else if (e.code === "ArrowLeft") {
+            e.preventDefault();
+            navigateTo("./lab_5-6.html" + window.location.search);
+          } else if (e.code === "ArrowRight") {
+            e.preventDefault();
+            navigateTo("./lab_5-6.html" + window.location.search);
+          }
+        });
+
+        const card = document.querySelector(".card");
+        if (card) {
+          const tiltStrength = 8;
+          const handleMove = (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            card.style.setProperty("--mouse-x", String(x * 100));
+            card.style.setProperty("--mouse-y", String(y * 100));
+            card.style.setProperty("--tilt-x", String((y - 0.5) * -tiltStrength + "deg"));
+            card.style.setProperty("--tilt-y", String((x - 0.5) * tiltStrength + "deg"));
+          };
+          const handleLeave = () => {
+            card.style.setProperty("--tilt-x", "0deg");
+            card.style.setProperty("--tilt-y", "0deg");
+          };
+          card.addEventListener("pointermove", handleMove);
+          card.addEventListener("pointerleave", handleLeave);
+        }
+
+        const trackingArea = document.getElementById("trackingArea");
+        const xField = document.getElementById("xField");
+        const yField = document.getElementById("yField");
+        const relativeX = document.getElementById("relativeX");
+        const relativeY = document.getElementById("relativeY");
+        const pageX = document.getElementById("pageX");
+        const pageY = document.getElementById("pageY");
+        const cursorIndicator = document.getElementById("cursorIndicator");
+
+        if (trackingArea && xField && yField) {
+          trackingArea.addEventListener("pointermove", (e) => {
+            const rect = trackingArea.getBoundingClientRect();
+            const x = Math.round(e.clientX - rect.left);
+            const y = Math.round(e.clientY - rect.top);
+
+            xField.value = e.clientX;
+            yField.value = e.clientY;
+
+            if (relativeX) relativeX.textContent = x;
+            if (relativeY) relativeY.textContent = y;
+            if (pageX) pageX.textContent = e.pageX;
+            if (pageY) pageY.textContent = e.pageY;
+
+            if (cursorIndicator) {
+              cursorIndicator.style.left = x + "px";
+              cursorIndicator.style.top = y + "px";
+              cursorIndicator.style.opacity = "0.8";
+            }
+          });
+
+          trackingArea.addEventListener("pointerenter", () => {
+            if (cursorIndicator) {
+              cursorIndicator.style.opacity = "0.8";
+            }
+          });
+
+          trackingArea.addEventListener("pointerleave", () => {
+            if (cursorIndicator) {
+              cursorIndicator.style.opacity = "0";
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
