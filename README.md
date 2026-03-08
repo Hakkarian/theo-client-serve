@@ -1,6 +1,6 @@
-# Labs 3-4, 5-6 & 7-9: Cyberpunk Web Applications
+# Labs 3-4, 5-6, 7-9 & 11-12: Cyberpunk Web Applications
 
-A collection of interactive web pages with cyberpunk aesthetics, featuring custom audio player, canvas animations, SVG graphics, and cursor tracking.
+A collection of interactive web pages with cyberpunk aesthetics, featuring custom audio player, canvas animations, SVG graphics, cursor tracking, and file operations.
 
 ## Lab 3-4: Cyberpunk Profile Page
 
@@ -45,9 +45,25 @@ Real-time mouse cursor position tracking with visual feedback.
 - **Cyberpunk Styling** – Neon-styled input fields with glow effects
 - **Responsive Tracking Area** – Updates instantly as cursor moves
 
+## Lab 11-12: File Copy Utility
+
+**Location**: `lab_11-12.html`
+
+Web-based file copying utility with split-panel interface and drag-and-drop support.
+
+### Features
+
+- **Split-Panel Layout** – Left panel for source file selection, right panel for destination directory
+- **Drag and Drop Support** – Drag files directly into the source panel
+- **File System Access API** – Save files directly to selected directories (in supported browsers)
+- **Fallback Download** – Automatic fallback to browser downloads for unsupported browsers
+- **File Information Display** – Shows file name and size after selection
+- **Status Messages** – Real-time feedback on operations
+- **Modern Browser Support** – Uses HTML5 File API and File System Access API
+
 ### Keyboard Controls (All Labs)
 
-- `←` `→` – Navigate between labs (Lab 3-4 ↔ Lab 5-6 ↔ Lab 7-9)
+- `←` `→` – Navigate between labs (Lab 3-4 ↔ Lab 5-6 ↔ Lab 7-9 ↔ Lab 11-12)
 - `Space` – Toggle background music on/off
 
 ## Quick Start
@@ -69,6 +85,7 @@ Once the server is running:
 - **Lab 3-4**: [http://localhost:3000/index.html](http://localhost:3000/index.html)
 - **Lab 5-6**: [http://localhost:3000/lab_5-6.html](http://localhost:3000/lab_5-6.html)
 - **Lab 7-9**: [http://localhost:3000/lab_7-9.html](http://localhost:3000/lab_7-9.html)
+- **Lab 11-12**: [http://localhost:3000/lab_11-12.html](http://localhost:3000/lab_11-12.html)
 
 You can also navigate between labs using the navigation menu at the top or keyboard arrows.
 
@@ -89,6 +106,7 @@ lab_3-4_badarla/
 ├── index.html          # Lab 3-4: Profile page with audio player and drawing pad
 ├── lab_5-6.html        # Lab 5-6: Canvas & SVG animations showcase
 ├── lab_7-9.html        # Lab 7-9: Cursor position tracker
+├── lab_11-12.html      # Lab 11-12: File copy utility
 ├── scss/               # SCSS source files
 │   └── styles.scss     # Main stylesheet (cyberpunk theme)
 ├── css/                # Compiled CSS
@@ -97,6 +115,7 @@ lab_3-4_badarla/
 │   ├── profile.png     # Profile avatar image
 │   └── Fur_Vijay.mp3   # Background music track
 ├── package.json        # Project dependencies and scripts
+├── vercel.json         # Vercel deployment configuration
 └── README.md           # This file
 ```
 
@@ -106,6 +125,7 @@ lab_3-4_badarla/
 - **Lab 3-4**: Open `index.html` in browser
 - **Lab 5-6**: Open `lab_5-6.html` in browser
 - **Lab 7-9**: Open `lab_7-9.html` in browser
+- **Lab 11-12**: Open `lab_11-12.html` in browser
 - All pages share the same CSS and navigation system
 
 ### Stylesheets
