@@ -1,6 +1,6 @@
-# Labs 3-4, 5-6, 7-9 & 11-12: Cyberpunk Web Applications
+# Labs 3-4, 5-6, 7-9, 11-12 & 13-14: Cyberpunk Web Applications
 
-A collection of interactive web pages with cyberpunk aesthetics, featuring custom audio player, canvas animations, SVG graphics, cursor tracking, and file operations.
+A collection of interactive web pages with cyberpunk aesthetics, featuring custom audio player, canvas animations, SVG graphics, cursor tracking, file operations, and contact management.
 
 ## Lab 3-4: Cyberpunk Profile Page
 
@@ -61,9 +61,28 @@ Web-based file copying utility with split-panel interface and drag-and-drop supp
 - **Status Messages** – Real-time feedback on operations
 - **Modern Browser Support** – Uses HTML5 File API and File System Access API
 
+## Lab 13-14: Contact Manager
+
+**Location**: `lab_13-14.html`
+
+Telephone network contact management application with full CRUD operations and navigation.
+
+### Features
+
+- **Contact Storage** – Uses JavaScript Map (HashMap equivalent) with phone number as key
+- **Input Form** – Five text fields for: phone number, last name, first name, patronymic, address
+- **Add Functionality** – "Додати" button to add new contacts with validation
+- **Sort Functionality** – "Сортувати" button to sort contacts by phone number (ascending)
+- **View Functionality** – "Перегляд" button shows first contact
+- **Navigation** – "<" (previous) and ">" (next) buttons to browse through contacts
+- **Contact Display** – Shows current contact with all details in a styled card
+- **Position Indicator** – Shows current position (e.g., "2 / 5")
+- **Real-time Validation** – Prevents duplicate phone numbers and empty fields
+- **Notifications** – Toast-style notifications for all operations
+
 ### Keyboard Controls (All Labs)
 
-- `←` `→` – Navigate between labs (Lab 3-4 ↔ Lab 5-6 ↔ Lab 7-9 ↔ Lab 11-12)
+- `←` `→` – Navigate between labs (Lab 3-4 ↔ Lab 5-6 ↔ Lab 7-9 ↔ Lab 11-12 ↔ Lab 13-14)
 - `Space` – Toggle background music on/off
 
 ## Quick Start
@@ -86,6 +105,7 @@ Once the server is running:
 - **Lab 5-6**: [http://localhost:3000/lab_5-6.html](http://localhost:3000/lab_5-6.html)
 - **Lab 7-9**: [http://localhost:3000/lab_7-9.html](http://localhost:3000/lab_7-9.html)
 - **Lab 11-12**: [http://localhost:3000/lab_11-12.html](http://localhost:3000/lab_11-12.html)
+- **Lab 13-14**: [http://localhost:3000/lab_13-14.html](http://localhost:3000/lab_13-14.html)
 
 You can also navigate between labs using the navigation menu at the top or keyboard arrows.
 
@@ -107,6 +127,7 @@ lab_3-4_badarla/
 ├── lab_5-6.html        # Lab 5-6: Canvas & SVG animations showcase
 ├── lab_7-9.html        # Lab 7-9: Cursor position tracker
 ├── lab_11-12.html      # Lab 11-12: File copy utility
+├── lab_13-14.html      # Lab 13-14: Contact manager
 ├── scss/               # SCSS source files
 │   └── styles.scss     # Main stylesheet (cyberpunk theme)
 ├── css/                # Compiled CSS
@@ -126,6 +147,7 @@ lab_3-4_badarla/
 - **Lab 5-6**: Open `lab_5-6.html` in browser
 - **Lab 7-9**: Open `lab_7-9.html` in browser
 - **Lab 11-12**: Open `lab_11-12.html` in browser
+- **Lab 13-14**: Open `lab_13-14.html` in browser
 - All pages share the same CSS and navigation system
 
 ### Stylesheets
