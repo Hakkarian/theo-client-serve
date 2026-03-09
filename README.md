@@ -1,6 +1,6 @@
-# Labs 3-4, 5-6, 7-9, 11-12 & 13-14: Cyberpunk Web Applications
+# Labs 3-4, 5-6, 7-9, 11-12, 13-14 & 15-17: Cyberpunk Web Applications
 
-A collection of interactive web pages with cyberpunk aesthetics, featuring custom audio player, canvas animations, SVG graphics, cursor tracking, file operations, and contact management.
+A collection of interactive web pages with cyberpunk aesthetics, featuring custom audio player, canvas animations, SVG graphics, cursor tracking, file operations, contact management, and real-time chat.
 
 ## Lab 3-4: Cyberpunk Profile Page
 
@@ -80,10 +80,43 @@ Telephone network contact management application with full CRUD operations and n
 - **Real-time Validation** – Prevents duplicate phone numbers and empty fields
 - **Notifications** – Toast-style notifications for all operations
 
+## Lab 15-17: Real-time Chat Application
+
+**Location**: `lab_15-17.html` (client) + `server.js` (server)
+
+Client-server chat application where multiple clients can exchange messages through a WebSocket server.
+
+### Features
+
+- **WebSocket Server** – Node.js server that handles multiple client connections
+- **Real-time Messaging** – Instant message delivery to all connected clients
+- **User Management** – Track online users and broadcast user list
+- **Connection Panel** – Username input and server address configuration
+- **Message History** – Scrollable chat area with timestamped messages
+- **Visual Feedback** – Different styles for own messages vs. others
+- **System Notifications** – User join/leave notifications
+- **Online Users List** – Shows all currently connected users
+- **Connection Status** – Visual indicator of connection state
+
+### Running the Chat Server
+
+```bash
+# Install dependencies
+npm install
+
+# Start the WebSocket server
+npm run server
+
+# The server will run on ws://localhost:8080
+```
+
+Then open multiple browser tabs with `lab_15-17.html` to test multi-client chat.
+
 ### Keyboard Controls (All Labs)
 
-- `←` `→` – Navigate between labs (Lab 3-4 ↔ Lab 5-6 ↔ Lab 7-9 ↔ Lab 11-12 ↔ Lab 13-14)
+- `←` `→` – Navigate between labs (Lab 3-4 ↔ Lab 5-6 ↔ Lab 7-9 ↔ Lab 11-12 ↔ Lab 13-14 ↔ Lab 15-17)
 - `Space` – Toggle background music on/off
+- `Enter` – Send message (in Lab 15-17 chat)
 
 ## Quick Start
 
@@ -96,6 +129,9 @@ npm run build
 
 # Start local server on localhost:3000
 npm run serve
+
+# In a separate terminal, start WebSocket chat server (for Lab 15-17)
+npm run server
 ```
 
 ### Accessing the Labs
@@ -106,6 +142,7 @@ Once the server is running:
 - **Lab 7-9**: [http://localhost:3000/lab_7-9.html](http://localhost:3000/lab_7-9.html)
 - **Lab 11-12**: [http://localhost:3000/lab_11-12.html](http://localhost:3000/lab_11-12.html)
 - **Lab 13-14**: [http://localhost:3000/lab_13-14.html](http://localhost:3000/lab_13-14.html)
+- **Lab 15-17**: [http://localhost:3000/lab_15-17.html](http://localhost:3000/lab_15-17.html) (requires chat server)
 
 You can also navigate between labs using the navigation menu at the top or keyboard arrows.
 
@@ -115,9 +152,23 @@ You can also navigate between labs using the navigation menu at the top or keybo
 # Watch SCSS for changes (auto-compile)
 npm run watch
 
-# In another terminal, run the server
+# In another terminal, run the web server
 npm run serve
+
+# In another terminal, run the chat server (for Lab 15-17)
+npm run server
 ```
+
+### Testing the Chat Application (Lab 15-17)
+
+1. Start the WebSocket server: `npm run server`
+2. Start the web server: `npm run serve`
+3. Open `http://localhost:3000/lab_15-17.html` in multiple browser tabs/windows
+4. Enter different usernames in each tab
+5. Click "Підключитись" to connect to the server
+6. Start chatting between tabs!
+
+**Note**: The WebSocket server runs on `ws://localhost:8080` by default. You can change this in the client interface if needed.
 
 ## Project Structure
 
@@ -128,6 +179,8 @@ lab_3-4_badarla/
 ├── lab_7-9.html        # Lab 7-9: Cursor position tracker
 ├── lab_11-12.html      # Lab 11-12: File copy utility
 ├── lab_13-14.html      # Lab 13-14: Contact manager
+├── lab_15-17.html      # Lab 15-17: Chat client
+├── server.js           # WebSocket chat server (Lab 15-17)
 ├── scss/               # SCSS source files
 │   └── styles.scss     # Main stylesheet (cyberpunk theme)
 ├── css/                # Compiled CSS
@@ -148,6 +201,7 @@ lab_3-4_badarla/
 - **Lab 7-9**: Open `lab_7-9.html` in browser
 - **Lab 11-12**: Open `lab_11-12.html` in browser
 - **Lab 13-14**: Open `lab_13-14.html` in browser
+- **Lab 15-17**: Open `lab_15-17.html` in browser (requires WebSocket server running)
 - All pages share the same CSS and navigation system
 
 ### Stylesheets
@@ -184,7 +238,21 @@ SVG triangles with rotation are in the HTML section (lines ~54-116):
 - **Vanilla JavaScript** – Canvas animations, SVG manipulation, DOM interaction
 - **Canvas API** – 2D graphics rendering for animations
 - **SVG** – Scalable vector graphics with SMIL animations
+- **WebSocket** – Real-time bidirectional communication (Lab 15-17)
+- **Node.js** – Backend server for chat application
 - **Google Fonts** – Orbitron (headings), Share Tech Mono (code)
+
+## Deployment Notes
+
+**Static Labs (3-4, 5-6, 7-9, 11-12, 13-14)**: Deployed to Vercel at https://lab3-4badarla.vercel.app
+
+**Lab 15-17 (Chat Server)**: The WebSocket server (`server.js`) requires a separate hosting service that supports long-running WebSocket connections. Options include:
+- Railway.app
+- Render.com
+- Heroku
+- Your own VPS/server
+
+To use the chat on the deployed Vercel site, you'll need to deploy the WebSocket server separately and update the server URL in the client interface.
 
 ## License
 

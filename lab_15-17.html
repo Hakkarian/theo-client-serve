@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Lab 15-17 - Badarla</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+
+  <body>
+    <audio id="bgm" class="sr-only" loop preload="auto">
+      <source type="audio/mpeg" />
+    </audio>
+
+    <div class="bg" aria-hidden="true">
+      <div class="bg__grid"></div>
+      <div class="bg__glow"></div>
+      <div class="bg__scanlines"></div>
+      <div class="bg__vignette"></div>
+    </div>
+
+    <main class="wrap">
+      <nav class="nav" aria-label="Site">
+        <a class="nav__link" href="./index.html">Lab 3-4</a>
+        <a class="nav__link" href="./lab_5-6.html">Lab 5-6</a>
+        <a class="nav__link" href="./lab_7-9.html">Lab 7-9</a>
+        <a class="nav__link" href="./lab_11-12.html">Lab 11-12</a>
+        <a class="nav__link" href="./lab_13-14.html">Lab 13-14</a>
+        <a class="nav__link nav__link--active" href="./lab_15-17.html">Lab 15-17</a>
+      </nav>
+
+      <section class="card" aria-label="Content">
+        <header class="card__header">
+          <h1 class="title title--sm">
+            <span class="title__glitch" data-text="ЧАТ-ДОДАТОК">ЧАТ-ДОДАТОК</span>
+          </h1>
+          <p class="subtitle">Real-time Chat Application</p>
+        </header>
+
+        <div class="card__body">
+          <div style="margin-top: 8px;">
+            
+            <!-- Connection Panel -->
+            <div id="connectionPanel" style="margin-bottom: 20px; padding: 16px; border-radius: 8px; background: rgba(0, 245, 255, 0.08); border: 1px solid rgba(0, 245, 255, 0.3);">
+              <div style="display: flex; gap: 12px; align-items: flex-end;">
+                <div style="flex: 1;">
+                  <label for="usernameInput" style="display: block; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(234, 242, 255, 0.9); margin-bottom: 6px; letter-spacing: 0.06em;">ІМ'Я КОРИСТУВАЧА</label>
+                  <input 
+                    type="text" 
+                    id="usernameInput" 
+                    placeholder="Введіть ваше ім'я"
+                    style="width: 100%; padding: 10px 14px; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #00f5ff; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 245, 255, 0.4); border-radius: 6px; letter-spacing: 0.05em;"
+                  />
+                </div>
+                <div style="flex: 1;">
+                  <label for="serverInput" style="display: block; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(234, 242, 255, 0.9); margin-bottom: 6px; letter-spacing: 0.06em;">АДРЕСА СЕРВЕРА</label>
+                  <input 
+                    type="text" 
+                    id="serverInput" 
+                    value="ws://localhost:8080"
+                    style="width: 100%; padding: 10px 14px; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #eaf2ff; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(234, 242, 255, 0.3); border-radius: 6px;"
+                  />
+                </div>
+                <button id="connectBtn" type="button" style="padding: 10px 24px; font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #eaf2ff; background: rgba(183, 255, 42, 0.25); border: 2px solid #b7ff2a; border-radius: 6px; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 15px rgba(183, 255, 42, 0.3); white-space: nowrap;">
+                  Підключитись
+                </button>
+              </div>
+              <div id="connectionStatus" style="margin-top: 12px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(234, 242, 255, 0.68); text-align: center;">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ff6b42; margin-right: 8px;"></span>
+                Не підключено
+              </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div style="border-radius: 12px; border: 1px solid rgba(234, 242, 255, 0.9); background: radial-gradient(circle at 10% 0, rgba(0, 245, 255, 0.15), transparent 60%), radial-gradient(circle at 90% 100%, rgba(255, 43, 214, 0.12), transparent 60%), #050510; padding: 20px; margin-bottom: 16px;">
+              <div style="font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em; font-size: 12px; text-transform: uppercase; color: rgba(234, 242, 255, 0.86); margin-bottom: 16px;">ПОВІДОМЛЕННЯ</div>
+              
+              <div id="messagesContainer" style="height: 400px; overflow-y: auto; padding: 16px; background: rgba(0, 0, 0, 0.4); border-radius: 8px; border: 1px solid rgba(234, 242, 255, 0.2); margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px;">
+                <div style="text-align: center; color: rgba(234, 242, 255, 0.5); font-family: 'Share Tech Mono', monospace; font-size: 12px; margin: auto;">
+                  Підключіться до сервера для початку чату
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px;">
+                <input 
+                  type="text" 
+                  id="messageInput" 
+                  placeholder="Введіть повідомлення..."
+                  disabled
+                  style="flex: 1; padding: 12px 16px; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #eaf2ff; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(234, 242, 255, 0.3); border-radius: 6px; transition: all 0.2s;"
+                />
+                <button id="sendBtn" type="button" disabled style="padding: 12px 32px; font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(234, 242, 255, 0.4); background: rgba(255, 43, 214, 0.15); border: 2px solid rgba(255, 43, 214, 0.3); border-radius: 6px; cursor: not-allowed; transition: all 0.3s;">
+                  Надіслати
+                </button>
+              </div>
+            </div>
+
+            <!-- Online Users Panel -->
+            <div style="padding: 16px; background: rgba(234, 242, 255, 0.04); border-radius: 8px; border: 1px solid rgba(234, 242, 255, 0.15);">
+              <div style="font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(234, 242, 255, 0.68);">
+                <span style="color: #b7ff2a;">ОНЛАЙН:</span> <span id="onlineUsers">0</span> користувачів
+              </div>
+              <div id="usersList" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="card__footer">
+          <span class="chip">LAB_15-17</span>
+          <span class="sep" aria-hidden="true">/</span>
+          <span class="chip chip--alt">CHAT APP</span>
+        </footer>
+      </section>
+
+      <p class="hint">
+        <span class="mono">← →</span> switch pages · <span class="mono">Space</span> music on/off
+      </p>
+    </main>
+
+    <script>
+      (() => {
+        const audio = document.getElementById("bgm");
+        if (!audio) return;
+
+        const params = new URLSearchParams(window.location.search);
+        const trackFile = params.get("track") || "Fur_Vijay.mp3";
+
+        const bgmSource = audio.querySelector("source");
+        if (bgmSource) {
+          bgmSource.src = `./assets/${trackFile}`;
+          audio.load();
+        }
+
+        const toggleBgm = async () => {
+          if (audio.paused) {
+            try {
+              await audio.play();
+            } catch {}
+          } else {
+            audio.pause();
+          }
+        };
+
+        const EXIT_DURATION = 320;
+        const navigateTo = (url) => {
+          const wrap = document.querySelector(".wrap");
+          if (wrap) wrap.classList.add("page-exit");
+          setTimeout(() => { location.href = url; }, EXIT_DURATION);
+        };
+
+        document.querySelectorAll(".nav__link").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const href = link.getAttribute("href") || "";
+            if (href && !href.startsWith("#") && new URL(link.href, location.href).pathname !== location.pathname) {
+              e.preventDefault();
+              let url = link.href;
+              if (!url.includes("?")) url += (window.location.search || "");
+              navigateTo(url);
+            }
+          });
+        });
+
+        document.addEventListener("keydown", (e) => {
+          const target = e.target;
+          if (target?.closest?.("audio[controls]") || target?.closest?.("input") || target?.closest?.("textarea")) return;
+          if (e.code === "Space" && !e.defaultPrevented) {
+            e.preventDefault();
+            toggleBgm();
+          } else if (e.code === "ArrowLeft") {
+            e.preventDefault();
+            navigateTo("./lab_13-14.html" + window.location.search);
+          } else if (e.code === "ArrowRight") {
+            e.preventDefault();
+            navigateTo("./lab_13-14.html" + window.location.search);
+          }
+        });
+
+        const card = document.querySelector(".card");
+        if (card) {
+          const tiltStrength = 8;
+          const handleMove = (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            card.style.setProperty("--mouse-x", String(x * 100));
+            card.style.setProperty("--mouse-y", String(y * 100));
+            card.style.setProperty("--tilt-x", String((y - 0.5) * -tiltStrength + "deg"));
+            card.style.setProperty("--tilt-y", String((x - 0.5) * tiltStrength + "deg"));
+          };
+          const handleLeave = () => {
+            card.style.setProperty("--tilt-x", "0deg");
+            card.style.setProperty("--tilt-y", "0deg");
+          };
+          card.addEventListener("pointermove", handleMove);
+          card.addEventListener("pointerleave", handleLeave);
+        }
+
+        // Chat Application
+        let ws = null;
+        let username = "";
+        let isConnected = false;
+
+        const usernameInput = document.getElementById("usernameInput");
+        const serverInput = document.getElementById("serverInput");
+        const connectBtn = document.getElementById("connectBtn");
+        const connectionStatus = document.getElementById("connectionStatus");
+        const messagesContainer = document.getElementById("messagesContainer");
+        const messageInput = document.getElementById("messageInput");
+        const sendBtn = document.getElementById("sendBtn");
+        const onlineUsers = document.getElementById("onlineUsers");
+        const usersList = document.getElementById("usersList");
+
+        const updateConnectionStatus = (connected, message) => {
+          isConnected = connected;
+          const statusColor = connected ? "#b7ff2a" : "#ff6b42";
+          const statusText = connected ? "Підключено" : message || "Не підключено";
+          
+          connectionStatus.innerHTML = `
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${statusColor}; margin-right: 8px;"></span>
+            ${statusText}
+          `;
+
+          if (connected) {
+            connectBtn.textContent = "Відключитись";
+            connectBtn.style.background = "rgba(255, 107, 66, 0.25)";
+            connectBtn.style.borderColor = "#ff6b42";
+            connectBtn.style.boxShadow = "0 0 15px rgba(255, 107, 66, 0.3)";
+            messageInput.disabled = false;
+            sendBtn.disabled = false;
+            sendBtn.style.cursor = "pointer";
+            sendBtn.style.color = "#eaf2ff";
+            sendBtn.style.background = "rgba(255, 43, 214, 0.25)";
+            sendBtn.style.borderColor = "#ff2bd6";
+            sendBtn.style.boxShadow = "0 0 15px rgba(255, 43, 214, 0.3)";
+          } else {
+            connectBtn.textContent = "Підключитись";
+            connectBtn.style.background = "rgba(183, 255, 42, 0.25)";
+            connectBtn.style.borderColor = "#b7ff2a";
+            connectBtn.style.boxShadow = "0 0 15px rgba(183, 255, 42, 0.3)";
+            messageInput.disabled = true;
+            sendBtn.disabled = true;
+            sendBtn.style.cursor = "not-allowed";
+            sendBtn.style.color = "rgba(234, 242, 255, 0.4)";
+            sendBtn.style.background = "rgba(255, 43, 214, 0.15)";
+            sendBtn.style.borderColor = "rgba(255, 43, 214, 0.3)";
+            sendBtn.style.boxShadow = "none";
+          }
+        };
+
+        const addMessage = (message, type = "message", sender = "") => {
+          const messageEl = document.createElement("div");
+          
+          if (type === "system") {
+            messageEl.style.cssText = `
+              padding: 8px 12px;
+              background: rgba(255, 191, 54, 0.1);
+              border-left: 3px solid #ffbf36;
+              border-radius: 4px;
+              font-family: 'Share Tech Mono', monospace;
+              font-size: 11px;
+              color: rgba(234, 242, 255, 0.68);
+              text-align: center;
+            `;
+            messageEl.textContent = message;
+          } else {
+            const isOwn = sender === username;
+            const senderColor = isOwn ? "#00f5ff" : "#ff2bd6";
+            const bgColor = isOwn ? "rgba(0, 245, 255, 0.08)" : "rgba(255, 43, 214, 0.08)";
+            const borderColor = isOwn ? "rgba(0, 245, 255, 0.3)" : "rgba(255, 43, 214, 0.3)";
+            
+            messageEl.style.cssText = `
+              padding: 12px 16px;
+              background: ${bgColor};
+              border: 1px solid ${borderColor};
+              border-radius: 8px;
+              max-width: 70%;
+              align-self: ${isOwn ? "flex-end" : "flex-start"};
+            `;
+            
+            const timestamp = new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+            
+            messageEl.innerHTML = `
+              <div style="font-family: 'Share Tech Mono', monospace; font-size: 10px; color: ${senderColor}; margin-bottom: 6px; font-weight: 600;">
+                ${sender} <span style="color: rgba(234, 242, 255, 0.5); margin-left: 8px;">${timestamp}</span>
+              </div>
+              <div style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #eaf2ff; line-height: 1.5; word-break: break-word;">
+                ${message}
+              </div>
+            `;
+          }
+
+          if (messagesContainer.firstChild?.textContent?.includes("Підключіться до сервера")) {
+            messagesContainer.innerHTML = "";
+          }
+
+          messagesContainer.appendChild(messageEl);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        };
+
+        const updateUsersList = (users) => {
+          onlineUsers.textContent = users.length;
+          usersList.innerHTML = users.map(user => `
+            <span style="padding: 6px 12px; background: rgba(183, 255, 42, 0.15); border: 1px solid rgba(183, 255, 42, 0.3); border-radius: 4px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #b7ff2a;">
+              ${user}
+            </span>
+          `).join("");
+        };
+
+        const connect = () => {
+          if (isConnected) {
+            if (ws) {
+              ws.close();
+            }
+            return;
+          }
+
+          const name = usernameInput.value.trim();
+          if (!name) {
+            alert("Будь ласка, введіть ваше ім'я");
+            usernameInput.focus();
+            return;
+          }
+
+          username = name;
+          const serverUrl = serverInput.value.trim();
+
+          try {
+            ws = new WebSocket(serverUrl);
+
+            ws.onopen = () => {
+              updateConnectionStatus(true, "Підключено до сервера");
+              ws.send(JSON.stringify({ type: "join", username }));
+              addMessage(`Ви приєдналися до чату як ${username}`, "system");
+            };
+
+            ws.onmessage = (event) => {
+              try {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === "message") {
+                  addMessage(data.message, "message", data.sender);
+                } else if (data.type === "system") {
+                  addMessage(data.message, "system");
+                } else if (data.type === "users") {
+                  updateUsersList(data.users);
+                }
+              } catch (err) {
+                console.error("Error parsing message:", err);
+              }
+            };
+
+            ws.onerror = (error) => {
+              console.error("WebSocket error:", error);
+              addMessage("Помилка з'єднання з сервером", "system");
+            };
+
+            ws.onclose = () => {
+              updateConnectionStatus(false, "З'єднання закрито");
+              addMessage("Ви відключилися від сервера", "system");
+              ws = null;
+            };
+          } catch (err) {
+            alert("Не вдалося підключитися: " + err.message);
+            updateConnectionStatus(false, "Помилка підключення");
+          }
+        };
+
+        const sendMessage = () => {
+          if (!isConnected || !ws) {
+            return;
+          }
+
+          const message = messageInput.value.trim();
+          if (!message) {
+            return;
+          }
+
+          ws.send(JSON.stringify({ 
+            type: "message", 
+            message,
+            sender: username 
+          }));
+
+          messageInput.value = "";
+          messageInput.focus();
+        };
+
+        connectBtn.addEventListener("click", connect);
+
+        sendBtn.addEventListener("click", sendMessage);
+
+        messageInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+
+        // Button hover effects
+        connectBtn.addEventListener("mouseenter", () => {
+          if (isConnected) {
+            connectBtn.style.background = "rgba(255, 107, 66, 0.35)";
+          } else {
+            connectBtn.style.background = "rgba(183, 255, 42, 0.35)";
+          }
+        });
+
+        connectBtn.addEventListener("mouseleave", () => {
+          if (isConnected) {
+            connectBtn.style.background = "rgba(255, 107, 66, 0.25)";
+          } else {
+            connectBtn.style.background = "rgba(183, 255, 42, 0.25)";
+          }
+        });
+
+        sendBtn.addEventListener("mouseenter", () => {
+          if (!sendBtn.disabled) {
+            sendBtn.style.background = "rgba(255, 43, 214, 0.35)";
+            sendBtn.style.boxShadow = "0 0 25px rgba(255, 43, 214, 0.5)";
+          }
+        });
+
+        sendBtn.addEventListener("mouseleave", () => {
+          if (!sendBtn.disabled) {
+            sendBtn.style.background = "rgba(255, 43, 214, 0.25)";
+            sendBtn.style.boxShadow = "0 0 15px rgba(255, 43, 214, 0.3)";
+          }
+        });
+
+        messageInput.addEventListener("focus", () => {
+          messageInput.style.borderColor = "#00f5ff";
+          messageInput.style.boxShadow = "0 0 15px rgba(0, 245, 255, 0.3)";
+        });
+
+        messageInput.addEventListener("blur", () => {
+          messageInput.style.borderColor = "rgba(234, 242, 255, 0.3)";
+          messageInput.style.boxShadow = "none";
+        });
+
+        updateConnectionStatus(false);
+      })();
+    </script>
+  </body>
+</html>
